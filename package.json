@@ -1,0 +1,26 @@
+{
+  "name": "vvit-alumni-connect",
+  "version": "1.0.0",
+  "description": "Offical Alumni Connect VVIT",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdulMuheeth/vvit-alumni-connect.git"
+  },
+  "author": "Vaseem Naazleen Shaik, Abdul Muheet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbdulMuheeth/vvit-alumni-connect/issues"
+  },
+  "homepage": "https://github.com/AbdulMuheeth/vvit-alumni-connect#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
+  }
+}
