@@ -36,12 +36,16 @@
                 <br>At: <%= post.date %>
             </p>
         </div>
+
+        <% if(post.image) { %>
+        <img src="./../../uploads/<%= post.image %>" class="w-100"/>
+        <% } %>
     
-        <p>
+        <p class="mt-4">
             <%= post.body %>
         </p>
 
-        <div class="mt-4">
+        <div class="mt-4 mb-5">
             <a href="/posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
             <form action="/posts/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
                 <button type="submit" class="btn btn-danger">Delete</button>

@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const postSchema = new Schema ({
     title: { type: String, required: true },
     author: { type: String, required: true },
+    image: { type: String },
     body:  { type: String, required: true },
     date: { type: Date, default: Date.now}
 })
