@@ -21,10 +21,6 @@
             color: grey;
             font-size: small;
         }
-
-        .post-image {
-            max-height: 1000px;
-        }
     </style>
 </head>
 <body>
@@ -44,16 +40,16 @@
         </div>
 
         <% if(post.image) { %>
-        <img src="<%= post.image %>" class="post-image w-100"/>
+            <img src="<%= post.image %>" class="w-100"/>
         <% } %>
-    
+
         <p class="mt-4">
-            <%= post.body %>
+            <%- post.body %>
         </p>
 
-        <div class="mt-4 mb-5">
-            <a href="/posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-            <form action="/posts/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
+        <div class="mt-4">
+            <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+            <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>

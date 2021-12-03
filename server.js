@@ -11,6 +11,7 @@ const ejs = require("ejs")
 
 
 const postRouter = require('./routes/posts')
+const blogRouter = require('./routes/blog')
 
 const app = express()
 
@@ -21,8 +22,9 @@ app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
 app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(bodyParser.urlencoded({extended: true}))
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use(express.static(path.join(__dirname, '/public/bower_components')));
 app.use('/posts', postRouter)
+app.use('/blog', blogRouter)
 
 mongoose.connect(process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true }, err => {

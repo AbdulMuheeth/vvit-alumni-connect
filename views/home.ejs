@@ -6,13 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Connect VVIT - Home</title>
 
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
+
+    <style>
+        .caption {
+            border: 2px solid black;
+            border-radius: 20px;
+            box-shadow: 5px 5px #FF5733;
+            padding: 5px;
+            font-size: 3.5vw
+        }
+    </style>
 
 </head>
 <body>
     <%- include('header'); -%>
-        Home page
+    <%- include('slider'); -%>
+
+    <center><h1 class="m-4 caption">REUNITE - REMINISCE - RECONNECT</h1></center>
+
+    <!-- Posts -->
+
+
+    <!-- Blog posts -->
+
     <%- include('footer'); -%>
+
+    <script src="/jquery/dist/jquery.js"></script>
+    <script src="/jquery/dist/jquery.min.js"></script>
 </body>
 </html>

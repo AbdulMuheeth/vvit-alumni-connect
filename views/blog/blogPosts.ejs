@@ -18,10 +18,10 @@
     <div class="container">
 
         <div class="jumbotron">
-            <h1 class="display-4">Posts</h1>
-            <p class="lead">Got some interesting content to share with students, create a post!!</p>
+            <h1 class="display-4">Blog Posts</h1>
+            <p class="lead">Share your story or journey, create a blog post!!</p>
             <p class="lead">
-              <a class="btn btn-success btn-lg" href="/posts/new" role="button"> + New post</a>
+              <a class="btn btn-success btn-lg" href="/blog/new" role="button"> + New post</a>
             </p>
         </div>
     
@@ -29,26 +29,20 @@
             <% posts.forEach((post) => { %>
 
                 <div class="card mb-3 col-lg-9 col-md-10 col-sm-12">
-
-                    <% if(post.image) { %>
-                    <img src="<%= post.image %>" class="card-img-top" alt="">
-                    <% } %>
                     
                     <div class="card-body">
                       <h5 class="card-title"><%= post.title %></h5>
                       <p class="card-text"><small class="text-muted">By <%= post.author %></small></p>
-                      <p class="card-text"><%= post.body.substring(0, 100) %>...</p>
-
+                      <p class="card-text"><%= post.description %></p>
+                      <p class="card-text"><small class="mt-4 text-muted">Last updated <%= post.date %></small></p>
+                    
                         <div>
-                            <a href="/posts/<%= post.id %>" class="btn btn-primary">Read post</a>
-                            <a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-                            <form action="/posts/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
+                            <a href="/blog/<%= post.id %>" class="btn btn-primary">Read post</a>
+                            <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+                            <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
-
-                      <p class="card-text"><small class="mt-4 text-muted">Last updated <%= post.date %></small></p>
-                    
                     </div>
                 </div>
 

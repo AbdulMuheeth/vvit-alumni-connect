@@ -17,16 +17,11 @@ router.get("/new", (req, res) => {
 
 router.post("/new", upload.single('postImage'), (req, res) => {
 
-    let filename = ''
-    if(req.file && req.file.filename !== '') {
-        filename = req.file.filename
-    }
-
     const newPost = new Post({
         title: req.body.postTitle,
         author: req.body.authorName,
         body: req.body.postContent,
-        image: filename
+        image: req.body.PostImage 
     })
 
     newPost.save()
@@ -46,6 +41,8 @@ router.get("/", (req, res) => {
 
 // -------------------- SINGLE POST --------------
 
+// READ A POST
+
 router.get("/:id", (req, res) => {
 
     const postId = req.params.id
@@ -55,56 +52,40 @@ router.get("/:id", (req, res) => {
     })
 })
 
+// DELETE A POST
+
 router.delete('/:id', async (req, res) => {
     const postId = req.params.id
-
-    const post = await Post.findById(req.params.id)
-    deleteImage(post.image)
 
     await Post.findByIdAndDelete(postId)
     res.redirect('/posts')
 })
+
+// EDIT OR UPDATE A POST
 
 router.get('/edit/:id', async (req, res) => {
     const post = await Post.findById(req.params.id)
     res.render('posts/edit', { post: post })
 })
 
-router.put('/:id', upload.single('editImage'), async (req, res) => {
-
-    const post = await Post.findById(req.params.id)
-    let filename = post.image
-    if(req.file && req.file.filename !== '') {
-        deleteImage(filename)
-        filename = req.file.filename
-    }
-
-    Post.findByIdAndUpdate(
+router.put('/:id', async (req, res) => {
+    console.log(req.body)
+    await Post.findByIdAndUpdate(
         req.params.id,
         {
             author:req.body.authorName,
             title: req.body.postTitle,
             body: req.body.postContent,
-            image: filename 
-        }, 
-        {upsert: true},
-        function(err){
-            if(err)
-                console.log(err)
+            image: req.body.PostImage 
         }
     )
+
+    const post = await Post.findById(req.params.id)
+    console.log(post)
 
     res.redirect(`/posts/${req.params.id}`)
 })
 
-
-function deleteImage(imgUrl) {
-    fs.unlink(path.join("uploads/", imgUrl), (err) => {
-        if(err) {
-            throw err
-        }
-    })
-}
 
 
 module.exports = router;

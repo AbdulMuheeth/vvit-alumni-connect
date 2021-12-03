@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <%- include('bootstrap') -%>
+    <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
+
     <style>
         .navbar-nav li a:hover {
             color:black  !important;
@@ -18,19 +19,15 @@
         .navbar-brand {
             font-family: cursive;
         }
+
+        .navbar-collapse.collapse.in {
+            display: block!important;
+        }
+
+        .navs {
+            padding-right: 10%;
+        }
     </style>
-
-    <script>
-
-        $(function() {
-            console.log(location.pathname)
-            if ((location.pathname.split("/")[1]) !== ""){
-                $('nav a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
-            }
-        });
-
-    </script>
-    
 </head>
 <body>
 
@@ -44,17 +41,33 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
             
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <div class="collapse navbar-collapse justify-content-end navs" id="navbarNavDropdown">
                     <ul class="nav navbar-nav">
                         <li id="home" class="nav-item">
                           <a class="nav-link" href="/home">HOME</a>
                         </li>
-                        <li id="createPost" class="nav-item">
-                          <a class="nav-link" href="/posts/new">CREATE POST</a>
-                        </li>
-                        <li id="posts" class="nav-item">
-                          <a class="nav-link" href="/posts">VIEW POSTS</a>
-                        </li>
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              POSTS
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a id="createPost" class="ml-4 nav-link" href="/posts/new">CREATE POST</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="posts" class="ml-4 nav-link" href="/posts">VIEW POSTS</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              BLOG
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a id="createPost" class="ml-4 nav-link" href="/blog/new">CREATE BLOG POST</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="posts" class="ml-4 nav-link" href="/blog/">VIEW BLOG POSTS</a>
+                            </div>
+                        </div>
                     </ul>
                 </div>
     
@@ -62,5 +75,7 @@
     
           </nav>
     </div>
+
+    <script src="/bootstrap/dist/jquery/jquery.js"></script>
 </body>
 </html>
