@@ -21,6 +21,8 @@ router.get("/new", (req, res) => {
 
 router.post("/new", (req, res) => {
 
+    console.log(req.body)
+
     const newPost = new Blog({
         title: req.body.blogPostTitle,
         author: req.body.authorName,
@@ -77,7 +79,5 @@ router.delete('/:id', async (req, res) => {
     await Blog.findByIdAndDelete(postId)
     res.redirect('/blog')
 })
-
-
 
 module.exports = router;

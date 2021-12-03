@@ -7,6 +7,8 @@
     <title>Alumni Connect VVIT - Home</title>
 
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.carousel.min.css'/>
+    <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.theme.default.min.css'/>
 
     <style>
         .caption {
@@ -15,6 +17,35 @@
             box-shadow: 5px 5px #FF5733;
             padding: 5px;
             font-size: 3.5vw
+        }
+
+        .posts-slider {
+            background-color: chocolate;
+        }
+
+        .card img {
+            max-height: 250px;
+        }
+
+        .card {
+            height: 500px;
+        }
+
+        .owl-prev span, .owl-next span {
+            font-size: 50px;
+        }
+
+        .owl-prev, .owl-next {
+            position: absolute;
+            top: 30%;
+        }
+
+        .owl-prev {
+            left: -3%;
+        }
+
+        .owl-next {
+            right: -3%;
         }
     </style>
 
@@ -26,7 +57,7 @@
     <center><h1 class="m-4 caption">REUNITE - REMINISCE - RECONNECT</h1></center>
 
     <!-- Posts -->
-
+    <%- include('./posts/postsSlider'); -%>
 
     <!-- Blog posts -->
 
@@ -34,5 +65,36 @@
 
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="OwlCarousel/dist/owl.carousel.min.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            $('.owl-carousel').owlCarousel({
+                autoplay: true,
+                autoplayhoverpause: true,
+                autoplaytimeout: 100,
+                items: 4,
+                nav: true,
+                loop: true,
+                responsive: {
+                    300: {
+                        items: 1
+                    },
+
+                    700: {
+                        items: 2
+                    },
+
+                    1000: {
+                        items: 3
+                    },
+
+                    1500: {
+                        items: 4
+                    }
+                }
+            })
+        })
+    </script>
 </body>
 </html>

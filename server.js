@@ -9,6 +9,9 @@ var path = require('path')
 require('dotenv').config()
 const ejs = require("ejs")
 
+const Post = require('./models/post')
+const Blog = require('./models/blog')
+
 
 const postRouter = require('./routes/posts')
 const blogRouter = require('./routes/blog')
@@ -20,11 +23,13 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
-app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, '/public/bower_components')));
+
 app.use('/posts', postRouter)
 app.use('/blog', blogRouter)
+
+
 
 mongoose.connect(process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true }, err => {
@@ -38,7 +43,9 @@ app.get("/", (req, res) => {
 })
 
 app.get("/home", (req, res) => {
-    res.render("home")
+    Post.find({}, (err, foundPosts) => {
+        res.render('home', { posts: foundPosts})
+    })
 })
 
 const PORT = process.env.PORT || 5000;

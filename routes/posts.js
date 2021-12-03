@@ -1,13 +1,7 @@
 const express = require('express')
-const multer = require('multer')
-const upload = require("./../upload")
-const path = require('path')
-const fs = require('fs')
 const router = express.Router()
 
 const Post = require('../models/post')
-
-
 
 // ------------------CREATE POST ---------------
 
@@ -15,7 +9,9 @@ router.get("/new", (req, res) => {
     res.render('./../views/posts/newPost')
 })
 
-router.post("/new", upload.single('postImage'), (req, res) => {
+router.post("/new", (req, res) => {
+
+    console.log(req.body, req)
 
     const newPost = new Post({
         title: req.body.postTitle,
@@ -25,10 +21,8 @@ router.post("/new", upload.single('postImage'), (req, res) => {
     })
 
     newPost.save()
-
     res.redirect("/posts/" + newPost.id)
 })
-
 
 // ------------------ ALL POSTS -----------------
 
@@ -44,9 +38,8 @@ router.get("/", (req, res) => {
 // READ A POST
 
 router.get("/:id", (req, res) => {
-
     const postId = req.params.id
-
+   
     Post.findById(postId, (err, post) => {
         res.render("./../views/posts/post", {post: post})
     })
