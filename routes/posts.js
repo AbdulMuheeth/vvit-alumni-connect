@@ -9,9 +9,7 @@ router.get("/new", (req, res) => {
     res.render('./../views/posts/newPost')
 })
 
-router.post("/new", (req, res) => {
-
-    console.log(req.body, req)
+router.post("/new", async (req, res) => {
 
     const newPost = new Post({
         title: req.body.postTitle,
@@ -20,7 +18,7 @@ router.post("/new", (req, res) => {
         image: req.body.PostImage 
     })
 
-    newPost.save()
+    await newPost.save()
     res.redirect("/posts/" + newPost.id)
 })
 
@@ -62,7 +60,6 @@ router.get('/edit/:id', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-    console.log(req.body)
     await Post.findByIdAndUpdate(
         req.params.id,
         {
@@ -74,7 +71,6 @@ router.put('/:id', async (req, res) => {
     )
 
     const post = await Post.findById(req.params.id)
-    console.log(post)
 
     res.redirect(`/posts/${req.params.id}`)
 })

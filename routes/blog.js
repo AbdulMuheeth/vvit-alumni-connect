@@ -19,7 +19,7 @@ router.get("/new", (req, res) => {
     res.render('./../views/blog/newBlogPost')
 })
 
-router.post("/new", (req, res) => {
+router.post("/new", async (req, res) => {
 
     console.log(req.body)
 
@@ -31,7 +31,7 @@ router.post("/new", (req, res) => {
         image: req.body.blogImage
     })
 
-    newPost.save()
+    await newPost.save()
 
     res.redirect("/blog/" + newPost.id)
 })
