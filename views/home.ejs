@@ -6,48 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Connect VVIT - Home</title>
 
+
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
     <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.carousel.min.css'/>
     <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.theme.default.min.css'/>
-
-    <style>
-        .caption {
-            border: 2px solid black;
-            border-radius: 20px;
-            box-shadow: 5px 5px #FF5733;
-            padding: 5px;
-            font-size: 3.5vw
-        }
-
-        .posts-slider {
-            background-color: chocolate;
-        }
-
-        .card img {
-            max-height: 250px;
-        }
-
-        .card {
-            height: 500px;
-        }
-
-        .owl-prev span, .owl-next span {
-            font-size: 50px;
-        }
-
-        .owl-prev, .owl-next {
-            position: absolute;
-            top: 30%;
-        }
-
-        .owl-prev {
-            left: -3%;
-        }
-
-        .owl-next {
-            right: -3%;
-        }
-    </style>
+    
+    <link rel='stylesheet' href='/css/home.css'/>
 
 </head>
 <body>
@@ -60,16 +24,18 @@
     <%- include('./posts/postsSlider'); -%>
 
     <!-- Blog posts -->
-
+    <%- include('./blog/blogSlider'); -%>
+    
     <%- include('footer'); -%>
 
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="OwlCarousel/dist/owl.carousel.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
     <script>
         $(document).ready(() => {
-            $('.owl-carousel').owlCarousel({
+            $('div#post-slider.owl-carousel').owlCarousel({
                 autoplay: true,
                 autoplayhoverpause: true,
                 autoplaytimeout: 100,
@@ -91,6 +57,33 @@
 
                     1500: {
                         items: 4
+                    }
+                }
+            })
+        })
+
+
+        $(document).ready(() => {
+            $('div#blog-slider.owl-carousel').owlCarousel({
+                autoplay: true,
+                autoplayhoverpause: true,
+                autoplaytimeout: 100,
+                items: 2,
+                nav: true,
+                loop: true,
+                margin: 5,
+                padding: 5,
+                responsive: {
+                    300: {
+                        items: 1
+                    },
+
+                    900: {
+                        items: 2
+                    },
+
+                    1500: {
+                        items: 3
                     }
                 }
             })

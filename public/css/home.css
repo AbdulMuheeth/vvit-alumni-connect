@@ -1,0 +1,112 @@
+.caption {
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px #ff5733;
+  padding: 5px;
+  font-size: 3.5vw;
+}
+
+.posts-slider {
+  background-color: chocolate;
+}
+
+.post-card img {
+  max-height: 250px;
+}
+
+.post-card {
+  height: 500px;
+}
+
+.owl-prev span,
+.owl-next span {
+  font-size: 50px;
+}
+
+.owl-prev,
+.owl-next {
+  position: absolute;
+  top: 30%;
+}
+
+.owl-prev {
+  left: -3%;
+}
+
+.owl-next {
+  right: -3%;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-header a {
+  height: 40px !important;
+}
+
+footer {
+  background-color: #00334e;
+  color: #f6f5f5;
+  margin-top: 30px;
+}
+
+.footer-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.footer-container .content {
+  padding-left: 20px;
+}
+
+.social-media {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+i {
+  font-size: x-large;
+  color: #f6f5f5;
+}
+
+i:hover {
+  color: #ee6f57;
+}
+
+.logo img {
+  width: 100%;
+  align-self: center;
+}
+
+.footer-about a {
+  color: #f6f5f5;
+}
+
+.footer-about a:hover {
+  color: #ee6f57;
+}
+
+@media only screen and (max-width: 700px) {
+  .logo img {
+    width: 70%;
+    align-self: center;
+  }
+
+  .logo {
+    margin-left: 20%;
+    margin-top: 30px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .footer-about {
+    margin-left: 20%;
+  }
+}
+
+/* Color palatees: https://colorhunt.co/palette/f6f5f514537400334eee6f57
+                   https://colorhunt.co/palette/2d4059ea5455f07b3fffd460
+*/

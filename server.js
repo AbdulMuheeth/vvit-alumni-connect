@@ -42,10 +42,12 @@ app.get("/", (req, res) => {
     res.redirect("/home")
 })
 
-app.get("/home", (req, res) => {
-    Post.find({}, (err, foundPosts) => {
-        res.render('home', { posts: foundPosts})
-    })
+app.get("/home", async (req, res) => {
+    let posts = await Post.find()
+    let blogPosts = await Blog.find()
+
+    res.render('home', { posts: posts, blogPosts: blogPosts})
+
 })
 
 const PORT = process.env.PORT || 5000;

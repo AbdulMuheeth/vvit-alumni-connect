@@ -1,9 +1,12 @@
 <div class="container mt-4">
-    <h1 class="mt-2 mb-2">Posts</h1>
-    <div class="owl-carousel owl-theme">
+    <div class="section-header mt-2 mb-4">
+        <h1>Posts</h1>
+        <a class="btn btn-success" href="/posts" role="button"> View all</a>
+    </div>
+    <div id="post-slider" class="owl-carousel owl-theme">
         <% posts.forEach((post) => { %>
 
-            <div class="card m-2">
+            <div class="post-card card m-2">
 
                 <% if(post.image) { %>
                 <img src="<%= post.image %>" class="card-img-top" alt="">
