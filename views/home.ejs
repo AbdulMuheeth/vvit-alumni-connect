@@ -10,7 +10,7 @@
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
     <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.carousel.min.css'/>
     <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.theme.default.min.css'/>
-    
+
     <link rel='stylesheet' href='/css/home.css'/>
 
 </head>
@@ -25,6 +25,9 @@
 
     <!-- Blog posts -->
     <%- include('./blog/blogSlider'); -%>
+
+    <!-- Map -->
+    <%- include('map'); -%>
     
     <%- include('footer'); -%>
 
@@ -35,7 +38,7 @@
 
     <script>
         $(document).ready(() => {
-            $('div#post-slider.owl-carousel').owlCarousel({
+            $('.owl-carousel').owlCarousel({
                 autoplay: true,
                 autoplayhoverpause: true,
                 autoplaytimeout: 100,
@@ -57,33 +60,6 @@
 
                     1500: {
                         items: 4
-                    }
-                }
-            })
-        })
-
-
-        $(document).ready(() => {
-            $('div#blog-slider.owl-carousel').owlCarousel({
-                autoplay: true,
-                autoplayhoverpause: true,
-                autoplaytimeout: 100,
-                items: 2,
-                nav: true,
-                loop: true,
-                margin: 5,
-                padding: 5,
-                responsive: {
-                    300: {
-                        items: 1
-                    },
-
-                    900: {
-                        items: 2
-                    },
-
-                    1500: {
-                        items: 3
                     }
                 }
             })

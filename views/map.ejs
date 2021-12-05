@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <title>Map</title>
+
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        .gm-ui-hover-effect {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container mt-4 mb-8">
+        <h1 class="mb-4">Map</h1>
+        <div id="map"></div>
+    </div>
+
+
+    <script>
+
+    const locations = [
+        { lat: 23.4060115814209, lng: 79.45809173583984 },
+        { lat: 16.22493492411575, lng: 79.99486443829736},
+        { lat: 16.18143658404932, lng: 80.33676218432879},
+        { lat: 15.807772450804114, lng: 80.35234589596628},
+        { lat: 16.275828563872572, lng: 80.57618399782149},
+        { lat: 16.512795, lng: 80.630979},
+        { lat: 16.51284642030067, lng: 80.62603300443479},
+        { lat: 16.505416, lng: 80.648253},
+        { lat: 17.444928218832928, lng: 78.37531768582593},
+        { lat: 17.44562693009835, lng: 78.38982899783055},
+    ];
+
+
+    function initMap() {
+        // Map options
+        var options = {
+            zoom: 7,
+            center: {lat: 16.3441, lng: 80.5245} // our college location
+        }
+
+        // New map
+        var map = new google.maps.Map(document.getElementById('map'), options)
+
+        // Adding our clg marker in the map
+        var campusMarker = new google.maps.Marker({
+            position: {lat: 16.3441, lng: 80.5245},
+            map: map
+        })
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: 'Vasireddy Venkatdari Institute of Technology',
+            closeBoxURL: ''
+        })
+
+        infoWindow.open(map, campusMarker);
+
+        // Create an array of alphabetical characters used to label the markers.
+        const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        
+        // Add some markers to the map.
+        const markers = locations.map((position, i) => {
+            const label = labels[i % labels.length];
+            const marker = new google.maps.Marker({
+                position: position,
+                label: label,
+            });
+
+            // markers can only be keyboard focusable when they have click listeners
+            // open info window when marker is clicked
+            marker.addListener("click", () => {
+                infoWindow.setContent(label);
+                infoWindow.open(map, marker);
+            });
+
+            return marker;
+        });
+
+        // Add a marker clusterer to manage the markers.
+        const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+    }
+
+    </script>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEpd9fEGDkJGlOQGhkcmDzhWVh68SCEjU&callback=initMap"
+      async defer
+    ></script>
+</body>
+</html>

@@ -8,36 +8,50 @@
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
 
     <style>
-        .navbar-nav li a:hover {
-            color:black  !important;
-        }
-    
-        .active {
-            color: black !important;
+        .navbar {
+            background-color: #00334e;
         }
 
-        .navbar-brand {
-            font-family: cursive;
+        nav .navbar-nav li a{
+            color: white !important;
+        }
+
+        nav .navbar-nav .dropdown button{
+            color: white !important;
         }
 
         .navbar-collapse.collapse.in {
             display: block!important;
         }
 
-        .navs {
-            padding-right: 10%;
+        .navbar .navbar-toggler .navbar-toggler-icon {
+            color: white !important;
+        }
+
+        .navbar .navbar-brand img{
+            height: 80px;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .navbar .navbar-brand img{
+                width: 100%;
+            }
+
+            .navbar .navbar-brand {
+                width: 75%
+            }
         }
     </style>
 </head>
 <body>
 
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg">
     
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">ALUMNI CONNECT</a>
+            <div class="container">
+                <a class="navbar-brand" href="/"><img class="nav-logo" src="/images/alumni_logo.png" alt="Logo"/></a>
             
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             
