@@ -14,8 +14,8 @@
   max-height: 250px;
 }
 
-.post-card {
-  height: 500px;
+.card {
+  height: 470px;
 }
 
 .owl-prev span,
@@ -77,8 +77,7 @@ i:hover {
 }
 
 .logo img {
-  width: 100%;
-  align-self: center;
+  width: 90%;
 }
 
 .footer-about a {
@@ -89,21 +88,32 @@ i:hover {
   color: #ee6f57;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 760px) {
   .logo img {
     width: 70%;
     align-self: center;
   }
 
   .logo {
-    margin-left: 20%;
     margin-top: 30px;
+  }
+
+  .footer-about {
+    display: none;
   }
 }
 
 @media only screen and (min-width: 900px) {
   .footer-about {
     margin-left: 20%;
+  }
+
+  .post-card {
+    height: 450px;
+  }
+
+  .blog-card {
+    height: 400px;
   }
 }
 

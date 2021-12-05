@@ -16,7 +16,7 @@
                   <h5 class="card-title"><%= post.title %></h5>
                   <p class="card-text"><small class="text-muted">By <%= post.author %></small></p>
                   <p class="card-text"><%= post.body.substring(0, 50) %>...</p>
-                  <a href="/posts/<%= post.id %>" class="btn btn-primary">Read post</a>
+                  <a href="/posts/<%= post.id %>" class="btn btn-primary  mb-2">Read post</a>
                   <p class="card-text"><small class="mt-4 text-muted">Last updated <%= post.date.toLocaleDateString() %></small></p>
                 
                 </div>
