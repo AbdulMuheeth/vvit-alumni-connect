@@ -17,15 +17,29 @@ router.post('/',(req,res)=>{
         password : req.body.password
     });
 
-    req.login(user,(err)=>{            
-        if(err)           
+    
+    passport.authenticate("local",(err,user,info)=>{
+        if(err)
             console.log(err);
+        if(!user)
+        {
+            res.send("Credentials are not crt");
+        }
         else
         {
-            passport.authenticate("local")(req,res,()=>{
+            if(!user.active) 
+                res.send("You request is yet to be accepted");
+            else{
+            req.login(user,(err)=>{            
+                if(err)           
+                    console.log(err);
+                else
                 res.redirect('/secrets');
             })
         }
+        }
+    })(req,res,()=>{
+            res.redirect('/secrets');
     })
 })
 

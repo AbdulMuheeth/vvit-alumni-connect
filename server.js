@@ -22,19 +22,15 @@ const loginRouter = require('./routes/authentication/login');
 const registerRouter = require('./routes/authentication/register');
 const logoutRouter = require('./routes/authentication/logout');
 const secretRouter = require('./routes/authentication/secrets');
+const verifyRouter = require('./routes/authentication/verify');
 
 const app = express()
 
 
-passport.use(User.createStrategy());   
+passport.use(User.createStrategy());
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-    done(null, user);
-});
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());   
 
 app.use(session({
     secret:"mysecret",
@@ -68,7 +64,7 @@ app.use('/login', loginRouter)
 app.use('/register', registerRouter)
 app.use('/secrets',secretRouter)
 app.use('/logout',logoutRouter)
-
+app.use('/verify',verifyRouter);
 
 
 app.get("/", (req, res) => {
