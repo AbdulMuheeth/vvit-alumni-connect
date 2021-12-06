@@ -7,15 +7,10 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated())
         res.redirect('/secrets');
     else
-        res.render('authentication/login');
+        res.render("authentication/login",{errMsg:""});
 })
 
 router.post('/',(req,res)=>{
-    
-    const user = new User({             
-        username : req.body.username,
-        password : req.body.password
-    });
 
     
     passport.authenticate("local",(err,user,info)=>{

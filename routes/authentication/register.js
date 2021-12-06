@@ -7,25 +7,29 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated())
         res.redirect('/secrets');
     else
-        res.render('authentication/register');
+        res.render("authentication/register",{errMsg:""}); 
+        
 })
 
 router.post('/',(req,res)=>{
-    const newUser = new User({
-        username: req.body.username,
-        email:req.body.email
-      })
-    User.register(newUser,req.body.password,(err,user)=>{     // passport method // it is used add new credentials to the db
+    console.log(req.body);
+    const user = new User({
+        fullname:req.body.fullname,
+        username:req.body.username,
+        role:req.body.role,
+        address:req.body.address,
+        phone:req.body.phone
+    })
+    
+    User.register(user,req.body.password,(err,user)=>{     // passport method // it is used add new credentials to the db
         if(err)
         {
             console.log(err);
-            res.redirect("/register");
+            res.render('authentication/register',{errMsg : err});
         }
         else
         {
-            passport.authenticate("local") (req,res,()=>{       // authenticate local is used to create/generate a cookie
-                res.redirect('/secrets');                       // which is can be used for cookie authentication
-            })
+           res.render('authentication/login',{errMsg:"please login!"})
 
         }
     })

@@ -5,7 +5,7 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated())
         res.render('secrets');
     else{
-        res.redirect('/register');
+        res.render('authentication/login',{errMsg:""});
     }
 })
 
