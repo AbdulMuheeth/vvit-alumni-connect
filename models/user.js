@@ -9,6 +9,15 @@ const userSchema = new mongoose.Schema({
     role : { type: String,required:true},
     phone : { type: Number,required:true},
     active : {type: Boolean,default:false},
+    moderator: {type: Boolean,default:false},
+    occupation: {type:String, default:"Edit your occupation"},
+    aboutyourself:{type:String,default:"None"},
+    socialmedia: {
+        website: {type:String, default:"None"},
+        github: {type:String, default:"None"},
+        twitter: {type:String, default:"None"},
+        linkedin: {type:String, default:"None"}
+    },
     administrator : {type: Boolean,default:false}
 })
 
