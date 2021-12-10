@@ -10,8 +10,8 @@ var fs = require('fs');
 var path = require('path')
 require('dotenv').config()
 const ejs = require("ejs")
-const User = require('./models/user')
 
+const User = require('./models/user')
 const Post = require('./models/post')
 const Blog = require('./models/blog')
 
@@ -48,8 +48,6 @@ mongoose.connect(process.env.MONGO_URI,
         console.log('connected to db')
     }
 )
-
-
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());

@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/',(req,res)=>{
     if(req.isAuthenticated())
-        res.render('secrets');
+        res.send('You are authenticated!');
     else{
         res.render('authentication/login',{errMsg:""});
     }
