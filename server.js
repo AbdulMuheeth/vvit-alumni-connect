@@ -23,7 +23,8 @@ const registerRouter = require('./routes/authentication/register');
 const logoutRouter = require('./routes/authentication/logout');
 const secretRouter = require('./routes/authentication/secrets');
 const verifyRouter = require('./routes/authentication/verify');
-const profileRouter = require('./routes/authentication/profile')
+const profileRouter = require('./routes/authentication/profile');
+const profileEditRouter = require('./routes/authentication/profileEdit');
 
 const app = express()
 
@@ -65,6 +66,7 @@ app.use('/secrets',secretRouter)
 app.use('/logout',logoutRouter)
 app.use('/verify',verifyRouter);
 app.use('/profile',profileRouter);
+app.use('/editprofile',profileEditRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/home")
