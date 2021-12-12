@@ -1,0 +1,17 @@
+.del-btn {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid black;
+    color: white;
+    background-color: red;
+}
+
+.edit-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid black;
+    color: white;
+    background-color: blue;
+}

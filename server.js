@@ -6,6 +6,7 @@ const session = require('express-session')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const flash = require('connect-flash')
 var fs = require('fs');
 var path = require('path')
 require('dotenv').config()
@@ -52,6 +53,7 @@ mongoose.connect(process.env.MONGO_URI,
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
+app.use(flash());
 app.use(cookieParser());
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))

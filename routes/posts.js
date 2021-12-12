@@ -48,6 +48,13 @@ router.get("/:id", (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const postId = req.params.id
+    const post = await Post.findById(postId)
+
+    await Comment.deleteMany({
+        "_id": {
+            $in: post.comments
+        }
+    })
 
     await Post.findByIdAndDelete(postId)
     res.redirect('/posts')
@@ -81,20 +88,20 @@ router.put('/:id', async (req, res) => {
 // ---- ADD A NEW COMMENT
 router.post('/:id/comment', async (req, res) => {
 
-    const comment = new Comment({
+    const comment = await new Comment({
         author: req.body.name,
         body: req.body.body
     })
 
-    comment.save((err, result) => {
+    await comment.save(async (err, result) => {
         if(err) {
             console.log(err)
         } else {
-            Post.findById(req.params.id, (err, post) => {
+            Post.findById(req.params.id, async (err, post) => {
                 if(err) { console.log(err) }
                 else {
-                    post.comments.push(result)
-                    post.save()
+                    await post.comments.push(result)
+                    await post.save()
                 }
             })
         }
@@ -129,10 +136,12 @@ router.put('/:postId/comments/:commentId', async (req, res) => {
 // DELETE A COMMENT
 router.delete('/:postId/comments/:commentId', async (req, res) => {
     const commentId = req.params.commentId
+    const postId = req.params.postId
 
-    await Comment.findByIdAndDelete(commentId);
+    const comment = await Comment.findById(commentId)
+    await comment.delete()
 
-    res.redirect(`/posts/${req.params.postId}`)
+    res.redirect(`/posts/${postId}`)
 })
 
 
