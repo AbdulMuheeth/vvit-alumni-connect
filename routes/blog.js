@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Blog = require('../models/blog')
+const Comment = require('../models/comment')
 
 // ------------------ ALL BLOG POSTS -----------------
 
@@ -42,7 +43,7 @@ router.get("/:id", (req, res) => {
 
     const postId = req.params.id
 
-    Blog.findById(postId, (err, post) => {
+    Blog.findById(postId).populate('comments').exec((err, post) => {
         res.render("./../views/blog/blogPost", {post: post})
     })
 })
@@ -81,3 +82,65 @@ router.delete('/:id', async (req, res) => {
 })
 
 module.exports = router;
+
+
+// ------- COMMENTS TO BLOG 
+
+// ---- ADD A NEW COMMENT
+router.post('/:id/comment', async (req, res) => {
+
+    const comment = await new Comment({
+        author: req.body.name,
+        body: req.body.body
+    })
+
+    await comment.save(async (err, result) => {
+        if(err) {
+            console.log(err)
+        } else {
+            Blog.findById(req.params.id, async (err, post) => {
+                if(err) { console.log(err) }
+                else {
+                    await post.comments.push(result)
+                    await post.save()
+                }
+            })
+        }
+    })
+
+    res.redirect(`/blog/${req.params.id}`)
+}) 
+
+// ---- UPDATE A COMMENT
+
+router.get('/:postId/edit/comments/:commentId', async (req, res) => {
+    const comment = await Comment.findById(req.params.commentId)
+
+    Blog.findById(req.params.postId).populate('comments').exec((err, post) => {     
+        res.render("./../views/blog/comments/editComment", {post: post, editComment: comment})
+    })
+})
+
+router.put('/:postId/comments/:commentId', async (req, res) => {
+
+    await Comment.findByIdAndUpdate(
+        req.params.commentId,
+        {
+            author:req.body.name,
+            body: req.body.body,
+        }
+    )
+
+    res.redirect(`/blog/${req.params.postId}`)
+})
+
+// DELETE A COMMENT
+router.delete('/:postId/comments/:commentId', async (req, res) => {
+    const commentId = req.params.commentId
+    const postId = req.params.postId
+
+    const comment = await Comment.findById(commentId)
+    await comment.delete()
+
+    res.redirect(`/blog/${postId}`)
+})

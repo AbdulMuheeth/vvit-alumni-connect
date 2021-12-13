@@ -1,0 +1,17 @@
+<div>
+    <h1>Add a comment</h1>
+    <hr>
+    <form action="/blog/<%= post.id %>/comment/" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" class="form-control"/>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="comment">Comment</label>
+            <textarea id="comment" name="body" class="form-control" rows="2"></textarea>
+        </div>
+        <br>
+        <button class="btn btn-primary" type="submit">Add Comment</button>
+    </form>
+</div>

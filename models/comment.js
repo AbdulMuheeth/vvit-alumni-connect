@@ -20,6 +20,15 @@ commentSchema.pre('remove', function(next) {
     );
 })
 
+commentSchema.pre('remove', function(next) {
+    this.model('Blog').updateMany(
+        { },
+        { "$pull": { "comments": this._id } },
+        { "multi": true },
+        next
+    );
+})
+
 const Comment = mongoose.model('Comment', commentSchema)
 
 module.exports = Comment
