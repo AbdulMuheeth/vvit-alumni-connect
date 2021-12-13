@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Post = require('../models/post')
+const Comment = require('../models/comment')
 
 // ------------------CREATE POST ---------------
 
@@ -38,7 +39,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
     const postId = req.params.id
    
-    Post.findById(postId, (err, post) => {
+    Post.findById(postId).populate('comments').exec((err, post) => {
         res.render("./../views/posts/post", {post: post})
     })
 })
@@ -47,6 +48,13 @@ router.get("/:id", (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const postId = req.params.id
+    const post = await Post.findById(postId)
+
+    await Comment.deleteMany({
+        "_id": {
+            $in: post.comments
+        }
+    })
 
     await Post.findByIdAndDelete(postId)
     res.redirect('/posts')
@@ -75,6 +83,66 @@ router.put('/:id', async (req, res) => {
     res.redirect(`/posts/${req.params.id}`)
 })
 
+// ------- COMMENTS TO POSTS
+
+// ---- ADD A NEW COMMENT
+router.post('/:id/comment', async (req, res) => {
+
+    const comment = await new Comment({
+        author: req.body.name,
+        body: req.body.body
+    })
+
+    await comment.save(async (err, result) => {
+        if(err) {
+            console.log(err)
+        } else {
+            Post.findById(req.params.id, async (err, post) => {
+                if(err) { console.log(err) }
+                else {
+                    await post.comments.push(result)
+                    await post.save()
+                }
+            })
+        }
+    })
+
+    res.redirect(`/posts/${req.params.id}`)
+}) 
+
+// ---- UPDATE A COMMENT
+
+router.get('/:postId/edit/comments/:commentId', async (req, res) => {
+    const comment = await Comment.findById(req.params.commentId)
+
+    Post.findById(req.params.postId).populate('comments').exec((err, post) => {     
+        res.render("./../views/posts/comments/editComment", {post: post, editComment: comment})
+    })
+})
+
+router.put('/:postId/comments/:commentId', async (req, res) => {
+
+    await Comment.findByIdAndUpdate(
+        req.params.commentId,
+        {
+            author:req.body.name,
+            body: req.body.body,
+        }
+    )
+
+    res.redirect(`/posts/${req.params.postId}`)
+})
+
+// DELETE A COMMENT
+router.delete('/:postId/comments/:commentId', async (req, res) => {
+    const commentId = req.params.commentId
+    const postId = req.params.postId
+
+    const comment = await Comment.findById(commentId)
+    await comment.delete()
+
+    res.redirect(`/posts/${postId}`)
+})
 
 
 module.exports = router;

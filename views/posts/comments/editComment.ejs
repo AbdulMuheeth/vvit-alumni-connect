@@ -47,7 +47,7 @@
 </head>
 <body>
 
-    <%- include('./../header'); -%>
+    <%- include('./../../header'); -%>
     <div class="container">
         <h1>
             <%= post.title %>
@@ -75,9 +75,51 @@
             </form>
         </div>
 
-        <%- include('./comments/commentBox') -%>
+        <div>
+            <h1>Edit your comment</h1>
+            <hr>
+            <form action="/posts/<%= post.id %>/comments/<%= editComment.id %>?_method=PUT" method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" value="<%= editComment.author %>" class="form-control"/>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="body" class="form-control" rows="2"><%= editComment.body %></textarea>
+                </div>
+                <br>
+                <button class="btn btn-primary" type="submit">Save Changes</button>
+            </form>
+        </div>
 
-        <%- include('./comments/comments') -%>
+        <div class="mb-5">
+            <h1>Comments</h1>
+            <% post.comments.forEach((comment) =>  { %>
+                <% if(editComment.id !== comment.id) { %>
+                    <hr>
+                    <form>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="name"><b><%= comment.author %></b></div>
+                                    <p><%= comment.body %></p>
+                                </div>
+                
+                                <div class="col-2">
+                                    <button class="edit-btn" onclick="window.location.href='<%= post.id %>/edit/comments/<%= comment.id %>';">
+                                        <i class='fas fa-pen'></i>
+                                    </button>
+                
+                                    <form action="/posts/<%= post.id %>/comments/<%= comment.id %>?_method=DELETE" method="post" class="d-inline">
+                                        <button type="submit" class="del-btn"><i class='fas fa-trash'></i></button>
+                                    </form>
+                                </div>
+                    
+                            </div>
+                    </form>
+                <% } %>
+            <% }) %>
+        </div>
     </div>
 </body>
 </html>
