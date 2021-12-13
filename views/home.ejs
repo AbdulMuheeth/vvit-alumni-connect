@@ -26,6 +26,9 @@
     <!-- Blog posts -->
     <%- include('./blog/blogSlider'); -%>
 
+    <!-- Recent Events -->
+    <%- include('recentevents'); -%>
+
     <!-- Map -->
     <%- include('map'); -%>
     
@@ -35,35 +38,5 @@
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="OwlCarousel/dist/owl.carousel.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
-    <script>
-        $(document).ready(() => {
-            $('.owl-carousel').owlCarousel({
-                autoplay: true,
-                autoplayhoverpause: true,
-                autoplaytimeout: 100,
-                items: 4,
-                nav: true,
-                loop: true,
-                responsive: {
-                    300: {
-                        items: 1
-                    },
-
-                    700: {
-                        items: 2
-                    },
-
-                    1000: {
-                        items: 3
-                    },
-
-                    1500: {
-                        items: 4
-                    }
-                }
-            })
-        })
-    </script>
 </body>
 </html>

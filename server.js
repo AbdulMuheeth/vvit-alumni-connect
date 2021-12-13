@@ -14,7 +14,7 @@ const User = require('./models/user')
 
 const Post = require('./models/post')
 const Blog = require('./models/blog')
-
+const Event = require('./models/event')
 
 const postRouter = require('./routes/posts')
 const blogRouter = require('./routes/blog')
@@ -25,6 +25,7 @@ const secretRouter = require('./routes/authentication/secrets');
 const verifyRouter = require('./routes/authentication/verify');
 const profileRouter = require('./routes/authentication/profile');
 const profileEditRouter = require('./routes/authentication/profileEdit');
+const eventRouter = require('./routes/events');
 
 const app = express()
 
@@ -69,6 +70,7 @@ app.use('/logout',logoutRouter)
 app.use('/verify',verifyRouter);
 app.use('/profile',profileRouter);
 app.use('/editprofile',profileEditRouter);
+app.use('/events',eventRouter)
 
 app.get("/", (req, res) => {
     res.redirect("/home")
