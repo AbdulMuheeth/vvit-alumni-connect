@@ -10,7 +10,6 @@
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
     <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.carousel.min.css'/>
     <link rel='stylesheet' href='/OwlCarousel/dist/assets/owl.theme.default.min.css'/>
-
     <link rel='stylesheet' href='/css/home.css'/>
 
 </head>
@@ -38,5 +37,34 @@
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="OwlCarousel/dist/owl.carousel.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    <script>
+        // For Post & Blog Slider
+        $(document).ready(() => {
+            $('.owl-carousel').owlCarousel({
+                autoplay: true,
+                autoplayhoverpause: true,
+                autoplaytimeout: 100,
+                items: 4,
+                nav: true,
+                loop: true,
+                responsive: {
+                    300: {
+                        items: 1
+                    },
+                    700: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 3
+                    },
+                    1500: {
+                        items: 4
+                    }
+                }
+            })
+        })
+    </script>
+
 </body>
 </html>
