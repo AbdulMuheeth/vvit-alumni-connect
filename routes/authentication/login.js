@@ -18,12 +18,14 @@ router.post('/',(req,res)=>{
             console.log(err);
         if(!user)
         {
-            res.send("Credentials are not crt");
+            res.render("authentication/login",{errMsg:" Email or passowrd is incorrect "});
         }
         else
         {
             if(!user.active) 
-                res.send("You request is yet to be accepted");
+            {
+                res.render('authentication/message',{msg:"notaccepted"});
+            }
             else{
             req.login(user,(err)=>{            
                 if(err)           

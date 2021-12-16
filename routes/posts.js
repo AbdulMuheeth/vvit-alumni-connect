@@ -102,12 +102,13 @@ router.post('/:id/comment', async (req, res) => {
                 else {
                     await post.comments.push(result)
                     await post.save()
+                    res.redirect(`/posts/${req.params.id}`)
                 }
             })
         }
     })
 
-    res.redirect(`/posts/${req.params.id}`)
+    
 }) 
 
 // ---- UPDATE A COMMENT
