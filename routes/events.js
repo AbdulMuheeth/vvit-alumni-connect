@@ -126,12 +126,27 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/:id',(req,res)=>{
-    const post_id = req.params.id;
+    const event_id = req.params.id;
 
-    Event.findById(post_id,(err,foundEvent) => {
-        res.render('events/event',{event:foundEvent, loggedIn: req.isAuthenticated() });
+    Event.findById(event_id,(err,foundEvent) => {
+        if(req.user === undefined)
+            res.render('events/event',{event:foundEvent, admin:false ,loggedIn: req.isAuthenticated() });
+        else
+            res.render('events/event',{event:foundEvent, admin:req.user.administrator ,loggedIn: req.isAuthenticated() });
     })
     
+})
+
+router.delete('/:id',async (req,res)=>{
+    const event_id = req.params.id;
+
+    await Event.findByIdAndDelete(event_id,(err)=>{
+        if(err)
+            console.log(err);
+        else
+            res.redirect('/events');
+    })
+
 })
 
 router.get('/edit/:id',(req,res)=>{
@@ -151,9 +166,7 @@ router.get('/edit/:id',(req,res)=>{
     else
     {
         res.status(404).render('404');
-    }
-    
-    
+    }  
 })
 
 router.put('/edit/:id',(req,res)=>{
