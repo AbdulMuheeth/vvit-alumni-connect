@@ -103,13 +103,22 @@
                             <a class="nav-link" href="/gallery">GALLERY</a>
                         </li>
 
-
+                        <li id="events" class="nav-item ml-3 mr-3">
+                            <a class="nav-link" href="/events">EVENTS</a>
+                        </li>
+                        
+                        <% if(loggedin) {%> 
+                            <li id="logout" class="nav-item ml-3 mr-3">
+                                <a class="nav-link" href="/logout">LOGOUT</a>
+                            </li>    
+                        <% } else { %>
                         <li id="register" class="nav-item ml-3 mr-3">
                             <a class="nav-link" href="/register">REGISTER</a>
                         </li>
                         <li id="login" class="nav-item ml-3 mr-3">
                             <a class="nav-link" href="/login">LOGIN</a>
                         </li>
+                        <% } %>
                     </ul>
                 </div>
     

@@ -9,13 +9,13 @@ const Image = require('../models/image')
 
 router.get('/', async (req, res) => {
     const images = await Image.find();
-    res.render("./../views/gallery/home", { images: images})
+    res.render("./../views/gallery/home", { images: images, loggedIn: req.isAuthenticated() })
 })
 
 // ----------- UPLOAD NEW IMAGE ---------
 
 router.get('/new', (req, res) => {
-    res.render("./../views/gallery/new")
+    res.render("./../views/gallery/new", {loggedIn: req.isAuthenticated()} )
 })
 
 router.post('/new', upload.single('image'), (req, res) => {

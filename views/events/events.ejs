@@ -52,7 +52,7 @@
     </style>
 </head>
 <body>
-    <%- include('../header'); -%>
+    <%- include('../header',{loggedin:loggedIn}); -%>
     <div class="container">
         <div class="row g-3 mt-5 mb-5">
             <% events.forEach((event)=>{ %>
@@ -65,7 +65,9 @@
                                 <%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%> </h6>
                             <p class="card-text"><%= event.description %></p>
                             <!-- <div class="mt-4 about d-flex justify-content-between align-items-center"> <span>By Prabhjot Singh</span> <span>On 12 Oct, 2020</span> <span>5 min read</span> </div> -->
-                            <a class="btn btn-outline-danger justify-content-center" href="/events/edit/<%= event._id %>"> Edit </a>
+                            <% if(admin) {%>
+                                <a class="btn btn-outline-danger justify-content-center" href="/events/edit/<%= event._id %>"> Edit </a>
+                            <% } %>
                         </div>
                     </div>
                 </div>

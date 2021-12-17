@@ -84,7 +84,7 @@ app.get("/home", async (req, res) => {
     let posts = await Post.find()
     let blogPosts = await Blog.find()
 
-    res.render('home', { posts: posts, blogPosts: blogPosts})
+    res.render('home', { posts: posts, blogPosts: blogPosts,loggedIn: req.isAuthenticated()})
 
 })
 

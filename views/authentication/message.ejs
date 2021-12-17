@@ -38,7 +38,7 @@
 </head>
 <body>
 
-    <%- include('../header'); -%>
+    <%- include('../header',{loggedin:loggedIn}); -%>
 
     <div class="container err"style="margin:10% 20% 0% 10%">
         <% if(msg == "notaccepted" ) { %>
@@ -47,8 +47,10 @@
         <% } else if(msg == "mailnotverified") { %>
             <h2> Your Mail is not Yet verified 🙁</h2>
             <h4>Please, verify your mail to login!! </h4>
+        <% } else if(msg == "loggedin") { %>
+            <h2> Your are logged in 😎✨</h2>
+            <a href="/logout"> logout </a>
         <% } %>
-
         <a href="/"> Go to Home Page </a>
     
 

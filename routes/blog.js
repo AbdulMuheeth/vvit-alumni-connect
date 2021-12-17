@@ -8,7 +8,7 @@ const Comment = require('../models/comment')
 
 router.get("/", (req, res) => {
     Blog.find({}, (err, foundPosts) => {
-        res.render('./../views/blog/Blogposts', { posts: foundPosts})
+        res.render('./../views/blog/Blogposts', { posts: foundPosts, loggedIn: req.isAuthenticated() })
     })
 })
 
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 // CREATE BLOG POST 
 
 router.get("/new", (req, res) => {
-    res.render('./../views/blog/newBlogPost')
+    res.render('./../views/blog/newBlogPost',{ loggedIn: req.isAuthenticated() })
 })
 
 router.post("/new", async (req, res) => {
@@ -44,7 +44,7 @@ router.get("/:id", (req, res) => {
     const postId = req.params.id
 
     Blog.findById(postId).populate('comments').exec((err, post) => {
-        res.render("./../views/blog/blogPost", {post: post})
+        res.render("./../views/blog/blogPost", {post: post, loggedIn: req.isAuthenticated() })
     })
 })
 
@@ -52,7 +52,7 @@ router.get("/:id", (req, res) => {
 
 router.get('/edit/:id', async (req, res) => {
     const post = await Blog.findById(req.params.id)
-    res.render('Blog/edit', { post: post })
+    res.render('Blog/edit', { post: post, loggedIn: req.isAuthenticated()  })
 })
 
 router.put('/:id', async (req, res) => {
@@ -117,7 +117,7 @@ router.get('/:postId/edit/comments/:commentId', async (req, res) => {
     const comment = await Comment.findById(req.params.commentId)
 
     Blog.findById(req.params.postId).populate('comments').exec((err, post) => {     
-        res.render("./../views/blog/comments/editComment", {post: post, editComment: comment})
+        res.render("./../views/blog/comments/editComment", {post: post, editComment: comment, loggedIn: req.isAuthenticated() })
     })
 })
 

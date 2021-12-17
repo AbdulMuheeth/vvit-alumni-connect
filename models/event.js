@@ -6,7 +6,7 @@ const eventSchema = mongoose.Schema({
     tag:{type:String,default:"this is the tagline of the event"},
     guests:[{
         guestname : {type:String},
-        guestimage : {type:String},
+        guestimage : {type:String,default:'https://cdn.icon-icons.com/icons2/2468/PNG/512/user_kids_avatar_user_profile_icon_149314.png'},
         guestfield:{type:String},
         profile: {
             facebook:{type:String,default:"None"},

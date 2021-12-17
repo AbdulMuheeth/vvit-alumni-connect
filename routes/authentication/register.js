@@ -5,14 +5,13 @@ const passport = require('passport');
 
 router.get('/',(req,res)=>{
     if(req.isAuthenticated())
-        res.redirect('/secrets');
+        res.render('authentication/message',{msg:"loggedin", loggedIn: req.isAuthenticated() });
     else
-        res.render("authentication/register",{errMsg:""}); 
+        res.render("authentication/register",{errMsg:"", loggedIn: req.isAuthenticated() }); 
         
 })
 
 router.post('/',(req,res)=>{
-    console.log(req.body);
     const user = new User({
         fullname:req.body.fullname,
         username:req.body.username,
@@ -25,12 +24,12 @@ router.post('/',(req,res)=>{
         if(err)
         {
             console.log(err);
-            res.render('authentication/register',{errMsg : err});
+            res.render('authentication/register',{errMsg : err, loggedIn: req.isAuthenticated() });
         }
         else
         {
             
-           res.render('authentication/login',{errMsg:"please login!"})
+           res.render('authentication/login',{errMsg:"please login!", loggedIn: req.isAuthenticated() })
 
         }
     })

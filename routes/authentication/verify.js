@@ -4,39 +4,40 @@ const User = require('../../models/user');
 
 
 router.get('/',(req,res)=>{
-    console.log(req.user);
-    if(req.isAuthenticated())
+    if(req.isAuthenticated() && req.user.active && (req.user.administrator || req.user.moderator))
     {
-        // console.log(req.user);
-        // console.log(req.user.administrator);
-        if(req.user.active && req.user.administrator)
-        {
-            User.find({"active" : {$ne:true}},(err,foundUser)=>{
-                res.render('authentication/verify',{usersToBeVerified : foundUser});
-            })
-        }
-        else
-        {
-            res.send("You are not authorized");
-        }
+        User.find({"active" : {$ne:true}},(err,foundUser)=>{
+            res.render('authentication/verify',{usersToBeVerified : foundUser, loggedIn: req.isAuthenticated()});
+        })
+    }
+    else
+    {
+        res.status(404).render('404');
     }
 })
 
 router.post('/',(req,res)=>{
 
-    User.findById(req.body.userid,(err,foundUser)=>{
-        if(err)
-        {
-            console.log(err);
-        }
-        else
-        {
-            foundUser.active = true;
-            foundUser.save(()=>{
-                res.redirect('/verify')
-            })
-        }
-    })
+    if(req.isAuthenticated() && req.user.active && (req.user.administrator || req.user.moderator))
+    {
+        User.findById(req.body.userid,(err,foundUser)=>{
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                foundUser.active = true;
+                foundUser.save(()=>{
+                    res.redirect('/verify')
+                })
+            }
+        })
+    }
+    else
+    {
+        res.status(404).render('404');
+    }
 })
 
 

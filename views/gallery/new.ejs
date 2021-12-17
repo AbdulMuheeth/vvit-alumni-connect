@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <%- include('./../header'); -%>
+    <%- include('./../header',{loggedin:loggedIn}); -%>
     <div class="container">
         <form action="/gallery/new" method="post" enctype="multipart/form-data">
             <h1 class="mt-5">Upload Image</h1>
