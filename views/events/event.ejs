@@ -88,8 +88,9 @@
     </div>
     <div class="col-lg-6">
       <h3>When</h3>
-        <p><%= event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%> to 
-        <%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%></p>
+        <h6><%= event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric',hour:'numeric',minute:'numeric'})%> </h6>
+             to 
+          <h6><%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric',hour:'numeric',minute:'numeric'})%></h6>
     </div>
     </div>
   </div>

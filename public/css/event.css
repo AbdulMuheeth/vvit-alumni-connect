@@ -202,7 +202,7 @@ body {
       position: absolute;
       bottom: -180px;
       color: #fff;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(153, 153, 153, 0.5);
       backdrop-filter: blur(15px);
       min-height: 140px;
       width: 100%;
