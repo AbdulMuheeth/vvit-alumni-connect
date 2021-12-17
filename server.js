@@ -19,14 +19,15 @@ const Event = require('./models/event')
 
 const postRouter = require('./routes/posts')
 const blogRouter = require('./routes/blog')
-const loginRouter = require('./routes/authentication/login');
-const registerRouter = require('./routes/authentication/register');
-const logoutRouter = require('./routes/authentication/logout');
-const secretRouter = require('./routes/authentication/secrets');
-const verifyRouter = require('./routes/authentication/verify');
-const profileRouter = require('./routes/authentication/profile');
-const profileEditRouter = require('./routes/authentication/profileEdit');
-const eventRouter = require('./routes/events');
+const loginRouter = require('./routes/authentication/login')
+const registerRouter = require('./routes/authentication/register')
+const logoutRouter = require('./routes/authentication/logout')
+const secretRouter = require('./routes/authentication/secrets')
+const verifyRouter = require('./routes/authentication/verify')
+const profileRouter = require('./routes/authentication/profile')
+const profileEditRouter = require('./routes/authentication/profileEdit')
+const eventRouter = require('./routes/events')
+const galleryRouter = require('./routes/gallery')
 
 const app = express()
 
@@ -58,6 +59,7 @@ app.use(flash());
 app.use(cookieParser());
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
+app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, '/public/bower_components')));
 
@@ -71,6 +73,8 @@ app.use('/verify',verifyRouter);
 app.use('/profile',profileRouter);
 app.use('/editprofile',profileEditRouter);
 app.use('/events',eventRouter)
+app.use('/gallery',galleryRouter)
+
 
 app.get("/", (req, res) => {
     res.redirect("/home")

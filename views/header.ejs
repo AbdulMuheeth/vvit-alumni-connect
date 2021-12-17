@@ -32,14 +32,25 @@
             height: 80px;
         }
 
-        @media only screen and (max-width: 500px) {
-            .navbar .navbar-brand img{
-                width: 100%;
-            }
+        .logo {
+            margin: 0 auto;
+        }
 
-            .navbar .navbar-brand {
-                width: 75%
-            }
+        .auth {
+            display: flex;
+        }
+
+        .navbar-toggler-icon {
+            justify-self: end;
+        }
+
+        .navs {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .navbar2 {
+            background-color: #C84B31;
         }
     </style>
 </head>
@@ -47,21 +58,26 @@
 
     <div>
         <nav class="navbar navbar-expand-lg">
+            <div class="logo">
+                <a class="navbar-brand" href="/"><img class="nav-logo" src="/images/alumni_logo.png" alt="Logo"/></a>
+            </div>
+        </nav>
+        
+        <nav class="navbar navbar-expand-lg navbar2">
     
             <div class="container">
-                <a class="navbar-brand" href="/"><img class="nav-logo" src="/images/alumni_logo.png" alt="Logo"/></a>
-            
+
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             
-                <div class="collapse navbar-collapse justify-content-end navs" id="navbarNavDropdown">
+                <div class="collapse navbar-collapse navs" id="navbarNavDropdown">
                     <ul class="nav navbar-nav">
-                        <li id="home" class="nav-item">
+                        <li id="home" class="nav-item ml-3 mr-3">
                           <a class="nav-link" href="/home">HOME</a>
                         </li>
 
-                        <div class="dropdown">
+                        <div class="dropdown ml-3 mr-3">
                             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               POSTS
                             </button>
@@ -72,7 +88,7 @@
                             </div>
                         </div>
 
-                        <div class="dropdown">
+                        <div class="dropdown ml-3 mr-3">
                             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               BLOG
                             </button>
@@ -82,12 +98,18 @@
                                 <a id="posts" class="ml-4 nav-link" href="/blog/">VIEW BLOG POSTS</a>
                             </div>
                         </div>
-                        <li id="home" class="nav-item">
+
+                        <li id="gallery" class="nav-item ml-3 mr-3">
+                            <a class="nav-link" href="/gallery">GALLERY</a>
+                        </li>
+
+
+                        <li id="register" class="nav-item ml-3 mr-3">
                             <a class="nav-link" href="/register">REGISTER</a>
-                          </li>
-                          <li id="home" class="nav-item">
+                        </li>
+                        <li id="login" class="nav-item ml-3 mr-3">
                             <a class="nav-link" href="/login">LOGIN</a>
-                          </li>
+                        </li>
                     </ul>
                 </div>
     
