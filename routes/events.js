@@ -80,6 +80,24 @@ router.post('/newevent',(req,res)=>{
                 image_gallery_arr.push(req.body.image); 
         }
 
+        var status = 'upcoming'
+        const startDate = new Date(req.body.startDate)
+        const endDate = new Date(req.body.endDate)
+        const current = new Date()
+        if(endDate < current)
+        {
+            status = 'past'
+        }
+        else if(startDate < current && endDate > current)
+        {
+            status = 'ongoing'
+        }
+        else if(startDate > current)
+        {
+            status = 'upcoming'
+        }
+
+        console.log(status);
         
         const event =  new Event({
             name:req.body.eventName,
@@ -87,6 +105,7 @@ router.post('/newevent',(req,res)=>{
             tag:req.body.tag,
             guests:guest_arr,
             location: req.body.location,
+            status:status,
             duration : {
                 start:new Date(req.body.startDate),
                 end: new Date(req.body.endDate)
@@ -228,12 +247,29 @@ router.put('/edit/:id',(req,res)=>{
                     image_gallery_arr.push(req.body.image); 
             }
 
+            var status = 'upcoming'
+            const startDate = new Date(req.body.startDate)
+            const endDate = new Date(req.body.endDate)
+            const current = new Date()
+            if(endDate < current)
+            {
+                status = 'past'
+            }
+            else if(startDate < current && endDate > current)
+            {
+                status = 'ongoing'
+            }
+            else if(startDate > current)
+            {
+                status = 'upcoming'
+            }
             
             
             foundEvent.name = req.body.eventName,
             foundEvent.description = req.body.eventDescription,
             foundEvent.tag = req.body.tag,
             foundEvent.guests = guest_arr,
+            foundEvent.status = status,
             foundEvent.location = req.body.location,
             foundEvent.duration = {
                     start:new Date(req.body.startDate),

@@ -95,14 +95,59 @@ function date(events){
     return l;
 }
 
+async function changestatus(events)
+{
+
+    for(var i=0;i<events.length;i++)
+    {
+        var status = 'upcoming'
+        const startDate = new Date(events[i].duration.start)
+        const endDate = new Date(events[i].duration.end)
+        const current = new Date()
+        if(endDate < current)
+            status = 'past'
+        else if(startDate < current && endDate > current)
+            status = 'ongoing'
+        else if(startDate > current)
+            status = 'upcoming'
+        if(status != events[i].status)
+        {
+            events[i].status = status
+            events[i].save((err)=>{
+                if(err)
+                    console.log(err);
+                else
+                    console.log(i);
+            })
+        }
+    }
+}
+
 app.get("/home", async (req, res) => {
+
     let posts = await Post.find()
     let blogPosts = await Blog.find()
-    let events = await Event.find().limit(5).sort({$natural:-1})
-    let months = await month(events);
-    let dates = await date(events)
+    let events = await Event.find( {status : {$in: ['upcoming', 'ongoing']}} )
+    await changestatus(events)
 
-    res.render('home', { posts: posts, blogPosts: blogPosts,events: events,months:months,dates:dates,loggedIn: req.isAuthenticated()})
+    let upcoming_events = await Event.find( {status : 'upcoming'}).limit(5).sort({$natural:-1})
+    let ongoing_events = await Event.find( {status : 'ongoing'}).limit(5).sort({$natural:-1})
+    let past_events = await Event.find( {status : 'past'}).limit(5).sort({$natural:-1})
+    
+    let upcoming_months = await month(upcoming_events);   let upcoming_dates = await date(upcoming_events);
+    let ongoing_months = await month(ongoing_events);     let ongoing_dates = await date(ongoing_events);
+    let past_months = await month(past_events);           let past_dates = await date(past_events);
+
+    res.render('home', {
+         posts: posts, 
+         blogPosts: blogPosts,
+         past_events: past_events,
+         ongoing_events: ongoing_events,
+         upcoming_events: upcoming_events,
+         months:{upcoming_months:upcoming_months,ongoing_months:ongoing_months,past_months:past_months},
+         dates:{upcoming_dates:upcoming_dates,ongoing_dates:ongoing_dates,past_dates:past_dates},
+         loggedIn: req.isAuthenticated()
+    })
 
 })
 

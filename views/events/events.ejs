@@ -53,6 +53,19 @@
 </head>
 <body>
     <%- include('../header',{loggedin:loggedIn}); -%>
+    
+    <% if(admin) {%>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4">Events</h1>
+                <p class="lead" style="margin-left:5%">
+                    Create a New Event
+                <a class="btn btn-success btn-lg" style="margin-left:5%" href="/events/newevent" role="button"> + New Event</a>
+                </p>
+            </div>
+        </div>
+    <% } %>
+
     <div class="container">
         <div class="row g-3 mt-5 mb-5">
             <% events.forEach((event)=>{ %>
@@ -63,8 +76,8 @@
                             <br> <%=event.tag%>
                             <h6 class="card-title text-dark mt-2">Time : <%= event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%> to 
                                 <%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%> </h6>
-                            <p class="card-text"><%= event.description %></p>
-                            <!-- <div class="mt-4 about d-flex justify-content-between align-items-center"> <span>By Prabhjot Singh</span> <span>On 12 Oct, 2020</span> <span>5 min read</span> </div> -->
+                            <p class="card-text"><%= event.description.substring(0, 100) %> ...</p>
+                            <div class="mt-4 about d-flex justify-content-between align-items-center"> <%= event.status %> event</div>
                             <% if(admin) {%>
                                 <a class="btn btn-outline-info" href="/events/edit/<%= event._id %>"> Edit </a>
 

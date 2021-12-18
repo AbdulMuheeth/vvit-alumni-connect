@@ -15,10 +15,11 @@ const eventSchema = mongoose.Schema({
         }
     }],
     location: {type:String,required:true,default:"OAT"},
+    status:{ type:String,required:true,default:"upcoming" },
     duration : {
         start : {type:Date,required:true},
         end : {type:Date,required:true}
-    } ,
+    },
     images:{
         profile:{type:String,default:"/images/vvit_campus_top.jpeg"},
         gallery:[{type:String}]

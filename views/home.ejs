@@ -26,7 +26,7 @@
     <%- include('./blog/blogSlider'); -%>
 
     <!-- Recent Events -->
-    <%- include('recentevents',{ events:events,dates:dates,months:months }); -%>
+    <%- include('recentevents',{ past_events: past_events,ongoing_events: ongoing_events,upcoming_events: upcoming_events,months,dates}); -%>
 
     <!-- Map -->
     <%- include('map'); -%>

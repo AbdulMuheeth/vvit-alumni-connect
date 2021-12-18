@@ -54,7 +54,7 @@
       .tab-content {
         margin-top: 5%;
       }
-      
+
       .tab-content .tab-pane {
         display: none;
       }
@@ -70,58 +70,74 @@
 <br><br>
     <div class="container">
           <ul class="nav nav-pills nav-fill justify-content-center">
-            <li class="nav-item"><a data-toggle="pill" class="active show" href="#menu1"> Upcoming Events </a></li>
-            <li class="nav-item"><a data-toggle="pill" href="#menu2"> Past Events </a></li>
-            <li class="nav-item"><a data-toggle="pill" href="#menu3"> Current Events </a></li>
+            <li class="nav-item"><a data-toggle="pill" class="active show" href="#menu2"> Past Events </a></li>
+            <li class="nav-item"><a data-toggle="pill"  href="#menu1"> Upcoming Events </a></li>
+            <li class="nav-item"><a data-toggle="pill" href="#menu3"> Ongoing Events </a></li>
           </ul>
 
           <div class="tab-content">
 
-            <div id="menu1" class="tab-pane fade active show" style="margin-top: 20px;">
-              <% for(var i=0;i<events.length;i++) { %>
+            <div id="menu1" class="tab-pane fade" style="margin-top: 20px;">
+              <% if(upcoming_events.length === 0) {%>
+                <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
+                  <h3> No Upcoming Events</h3>
+                </div>
+              <% } %>
+              <% for(var i=0;i<upcoming_events.length;i++) { %>
                 <div class="container row">
                   <div class="col-1">
                       <div class="calender mt-2">
-                        <div class="month"><%= months[i] %></div>
-                        <div class="date"><%= dates[i] %></div>
+                        <div class="month"><%= months.upcoming_months[i] %></div>
+                        <div class="date"><%= dates.upcoming_dates[i] %></div>
                       </div>
                   </div>
                   <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
-                      <h3><%= events[i].name %></h3>
-                      <p><%= events[i].description %></p>
+                      <h3><%= upcoming_events[i].name %></h3>
+                      <p><%= upcoming_events[i].description %></p>
                   </div>
                 </div>
               <% } %>
             </div>
 
-            <div id="menu2" class="tab-pane fade" style="margin-top: 20px;">
-              <% for(var i=0;i<events.length;i++) { %>
+            <div id="menu2" class="tab-pane fade active show" style="margin-top: 20px;">
+              <% if(past_events.length === 0) {%>
+                <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
+                  <h3> No past Events</h3>
+                </div>
+              <% } %>
+              <% for(var i=0;i<past_events.length;i++) { %>
                 <div class="container row">
                   <div class="col-1">
                       <div class="calender mt-2">
-                        <div class="month"><%= months[i] %></div>
-                        <div class="date"><%= dates[i] %></div>
+                        <div class="month"><%= months.past_months[i] %></div>
+                        <div class="date"><%= dates.past_dates[i] %></div>
                       </div>
                   </div>
                   <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
-                      <h3><%= events[i].name %></h3>
-                      <p><%= events[i].description %></p>
+                      <h3><%= past_events[i].name %></h3>
+                      <p><%= past_events[i].description %></p>
                   </div>
                 </div>
               <% } %>
             </div>
+
             <div id="menu3" class="tab-pane fade" style="margin-top: 20px;">
-              <% for(var i=0;i<events.length;i++) { %>
+              <% if(ongoing_events.length === 0) {%>
+                <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
+                  <h3> No Ongoing Events</h3>
+                </div>
+              <% } %>
+              <% for(var i=0;i<ongoing_events.length;i++) { %>
                 <div class="container row">
                   <div class="col-1">
                       <div class="calender mt-2">
-                        <div class="month"><%= months[i] %></div>
-                        <div class="date"><%= dates[i] %></div>
+                        <div class="month"><%= months.ongoing_months[i] %></div>
+                        <div class="date"><%= dates.ongoing_dates[i] %></div>
                       </div>
                   </div>
                   <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
-                      <h3><%= events[i].name %></h3>
-                      <p><%= events[i].description %></p>
+                      <h3><%= ongoing_events[i].name %></h3>
+                      <p><%= ongoing_events[i].description %></p>
                   </div>
                 </div>
               <% } %>
