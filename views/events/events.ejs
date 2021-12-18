@@ -4,78 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Events</title>
+    
+    <title>Events</title>
+
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <style>
-        .card {
-            border-radius: 20px;
-            width:85%;
-            overflow: hidden;
-            border: none;
-            background-color: #fff;
-
-            border: 0.25px solid rgb(70, 69, 69);
+        th {
+            padding-right: 5px;
         }
 
-        .image-card {
-            border-radius: 20px;
-            height: 250px;
-            width: 100%;
-            background-repeat: round;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden
-        }
-
-        .image-card img {
-            height: 150px;
-            width: 150px;
-            object-fit: cover
-        }
-
-        .card-text {
-            
-            font-size: 13px
-        }
-
-        .card-body a {
-            font-size: 12px
-        }
-
-        .about span {
-            font-size: 12px
+        .btn-primary {
+            background-color: #C84B31 !important;
+            border: 1px solid #C84B31 !important;
         }
     </style>
 </head>
 <body>
     <%- include('../header',{loggedin:loggedIn}); -%>
-    <div class="container">
-        <div class="row g-3 mt-5 mb-5">
-            <% events.forEach((event)=>{ %>
-                <div class="col-md-4">
-                    <div class="card" onclick="location.href='/events/<%= event._id %>'" style="cursor:pointer;" >
-                        <div class="card-img-top image-card image-card-1"  style="background-image: url('<%= event.images.profile %>')"> </div>
-                        <div class="card-body"> <span class="text-uppercase text-danger fw-bold fs-6"><%= event.name %> </span>
-                            <br> <%=event.tag%>
-                            <h6 class="card-title text-dark mt-2">Time : <%= event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%> to 
-                                <%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%> </h6>
-                            <p class="card-text"><%= event.description %></p>
-                            <!-- <div class="mt-4 about d-flex justify-content-between align-items-center"> <span>By Prabhjot Singh</span> <span>On 12 Oct, 2020</span> <span>5 min read</span> </div> -->
-                            <% if(admin) {%>
-                                <a class="btn btn-outline-info" href="/events/edit/<%= event._id %>"> Edit </a>
 
-                                <form action="/events/<%= event.id %>?_method=DELETE" method="post" class="d-inline">
-                                    <input type='submit' class="btn btn-outline-danger" value="Delete Event">
-                                </form>
-                            <% } %>
-                        </div>
+    <div class="container">
+
+        <div class="jumbotron mt-3">
+            <h1 class="display-4">Events</h1>
+        </div>
+
+        <div class="row card-group">
+        <% events.forEach((event, index) => { %>
+            <div class="col-md-4 col-sm-12  mt-3">
+                <div class="card" onclick="location.href='/events/<%= event._id %>'">
+                    <img class="card-img-top" height="200" src="<%= event.images.profile %>" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= event.name %></h5>
+                      <p class="card-text text-muted"><%=event.tag%></p>
+                      <p class="card-text"><%= event.description %></p>
+                     
+                      <table>
+                          <tr>
+                              <th>Starts at </th>
+                              <td><%= event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%></td>
+                          </tr>
+
+                          <tr>
+                            <th>Ends at </th>
+                            <td><%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%></td>
+                          </tr>
+                      </table>
+
+                      <a href="/events/<%= event._id %>" class="btn btn-primary mt-2">View Event</a>
+                    
+                      <% if(admin) {%>
+                        <a class="btn btn-outline-info" href="/events/edit/<%= event._id %>"> Edit </a>
+
+                        <form action="/events/<%= event.id %>?_method=DELETE" method="post" class="d-inline">
+                            <input type='submit' class="btn btn-outline-danger" value="Delete Event">
+                        </form>
+                      <% } %>
+                    
                     </div>
                 </div>
-            <% }) %>
+            </div>
+        <% }) %>
         </div>
     </div>
 </body>
