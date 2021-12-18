@@ -80,11 +80,29 @@ app.get("/", (req, res) => {
     res.redirect("/home")
 })
 
+
+function month(events){
+    l = []
+    for(var i=0;i<events.length;i++)
+        l.push(events[i].duration.start.toLocaleString('default',{month:'short'}));
+    return l;
+}
+
+function date(events){
+    l = []
+    for(var i=0;i<events.length;i++)
+        l.push(events[i].duration.start.getDate());
+    return l;
+}
+
 app.get("/home", async (req, res) => {
     let posts = await Post.find()
     let blogPosts = await Blog.find()
+    let events = await Event.find().limit(5).sort({$natural:-1})
+    let months = await month(events);
+    let dates = await date(events)
 
-    res.render('home', { posts: posts, blogPosts: blogPosts,loggedIn: req.isAuthenticated()})
+    res.render('home', { posts: posts, blogPosts: blogPosts,events: events,months:months,dates:dates,loggedIn: req.isAuthenticated()})
 
 })
 
