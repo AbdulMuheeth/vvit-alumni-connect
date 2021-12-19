@@ -8,7 +8,7 @@ const Comment = require('../models/comment')
 
 router.get("/", (req, res) => {
     Blog.find({}, (err, foundPosts) => {
-        res.render('./../views/blog/Blogposts', { posts: foundPosts, loggedIn: req.isAuthenticated() })
+        res.render('./../views/blog/blogPosts', { posts: foundPosts, loggedIn: req.isAuthenticated() })
     })
 })
 
