@@ -11,8 +11,11 @@
     "type": "git",
     "url": "git+https://github.com/AbdulMuheeth/vvit-alumni-connect.git"
   },
-  "author": "Vaseem Naazleen Shaik, Abdul Muheet",
+  "author": "Vaseem Naazleen Shaik, Abdul Muheeth",
   "license": "ISC",
+  "engines": {
+    "node": "14.15.3"
+  },
   "bugs": {
     "url": "https://github.com/AbdulMuheeth/vvit-alumni-connect/issues"
   },
