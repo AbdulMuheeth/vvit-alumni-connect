@@ -14,7 +14,7 @@
   "author": "Vaseem Naazleen Shaik, Abdul Muheeth",
   "license": "ISC",
   "engines": {
-    "node": "14.15.3"
+    "node": "16.13.1"
   },
   "bugs": {
     "url": "https://github.com/AbdulMuheeth/vvit-alumni-connect/issues"
