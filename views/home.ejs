@@ -20,7 +20,8 @@
     <!-- <center><h1 class="m-4 caption">Welcome, to VVIT Alumni Connect</h1></center> -->
 
     <!-- Recent Events -->
-    <%- include('./events/recentevents'); -%>
+    <%- include('./events/recentevents',{ past_events: past_events,ongoing_events: ongoing_events,upcoming_events: upcoming_events,months,dates}); -%>
+
 
     <!-- Posts -->
     <%- include('./posts/postsSlider'); -%>

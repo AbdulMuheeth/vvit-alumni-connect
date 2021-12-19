@@ -32,7 +32,7 @@
             height: 80px;
         }
 
-        .logo {
+        .main-logo {
             margin: 0 auto;
         }
 
@@ -52,14 +52,26 @@
         .navbar2 {
             background-color: #C84B31;
         }
+
+        @media only screen and (max-width: 500px) {
+            .nav-logo {
+                width: 90%;
+            }
+        }
+
+        @media only screen and (max-width: 400px) {
+            .nav-logo {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div>
         <nav class="navbar navbar-expand-lg">
-            <div class="logo">
-                <a class="navbar-brand" href="/"><img class="nav-logo" src="/images/alumni_logo.png" alt="Logo"/></a>
+            <div class="main-logo">
+                <center><a class="navbar-brand" href="/"><img class="nav-logo" src="/images/alumni_logo.png" alt="Logo"/></a></center>
             </div>
         </nav>
         

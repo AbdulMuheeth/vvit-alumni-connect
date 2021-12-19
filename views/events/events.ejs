@@ -30,16 +30,23 @@
 
         <div class="jumbotron mt-3">
             <h1 class="display-4">Events</h1>
+
+            <% if(admin) {%>
+                <p class="lead" style="margin-left:5%">
+                    Create a New Event
+                <a class="btn btn-success btn-lg" style="margin-left:5%" href="/events/newevent" role="button"> + New Event</a>
+                </p>
+            <% } %>
         </div>
 
         <div class="row card-group">
-        <% events.forEach((event, index) => { %>
+        <% events.forEach((event) => { %>
             <div class="col-md-4 col-sm-12  mt-3">
-                <div class="card" onclick="location.href='/events/<%= event._id %>'">
+                <div class="card" onclick="location.href='/events/<%= event.id %>'">
                     <img class="card-img-top" height="200" src="<%= event.images.profile %>" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title"><%= event.name %></h5>
-                      <p class="card-text text-muted"><%=event.tag%></p>
+                      <p class="card-text text-muted"><%= event.tag %></p>
                       <p class="card-text"><%= event.description %></p>
                      
                       <table>
@@ -57,7 +64,7 @@
                       <a href="/events/<%= event._id %>" class="btn btn-primary mt-2">View Event</a>
                     
                       <% if(admin) {%>
-                        <a class="btn btn-outline-info" href="/events/edit/<%= event._id %>"> Edit </a>
+                        <a class="btn btn-outline-info" href="/events/edit/<%= event.id %>"> Edit </a>
 
                         <form action="/events/<%= event.id %>?_method=DELETE" method="post" class="d-inline">
                             <input type='submit' class="btn btn-outline-danger" value="Delete Event">

@@ -18,19 +18,21 @@
         <div class="jumbotron mt-5">
             <h1 class="display-4">Gallery</h1>
             <p class="lead mt-4">Memories of a Lifetime with people you will never-ever forget!</p>
-            <hr class="my-4">
-            <p class="lead m-1">Add your college memories</p>
+            <hr class="mt-4 mb-4">
+            <p class="lead">Add your college memories</p>
             <p class="lead">
               <a class="btn btn-primary btn mt-2" href="/gallery/new" role="button">+ Image</a>
             </p>
-        </div>
+        </div> 
 
         <div>
-          <% images.forEach((image) => { %>
-            <img class="m-2" src="./../../uploads/<%= image.image %>" alt="<%= image.image %>" width="500px"/>
-          <% }) %>
+          <div class="row">
+            <% images.forEach((image) => { %>
+              <img class="col-lg-3 col-md-4 col-sm-12 mt-2" src="./../../uploads/<%= image.image %>" alt="<%= image.image %>" width="500px"/>
+            <% }) %> 
+          </div>
         </div>
-    </div>
+    </div> 
 
     <script src="/bootstrap/dist/jquery/jquery.js"></script>
 </body>
