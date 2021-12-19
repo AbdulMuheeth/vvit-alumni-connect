@@ -11,7 +11,6 @@ var fs = require('fs');
 var path = require('path')
 require('dotenv').config()
 const ejs = require("ejs")
-const config = require("./config")
 
 const User = require('./models/user')
 const Post = require('./models/post')
