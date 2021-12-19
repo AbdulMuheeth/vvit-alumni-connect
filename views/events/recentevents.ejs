@@ -30,17 +30,38 @@
       #home {
         display: flex;
       }
+
+      .events {
+        display: flex;
+      }
+
+      .events > a > li{
+        list-style: none;
+      }
+
+      .events > a{
+        color: white;
+        background-color: #C84B31;
+        border: 1px solid white;
+        padding: 10px;
+      }
+
+      .events > a:hover {
+        background-color: #00334e;
+        text-decoration: none;
+      }
     </style>
 </head>
 
 <body>
 <br><br>
     <div class="container">
+          <h1>Events</h1>
           
-          <ul class="nav nav-pills nav-fill justify-content-center">
-            <li class="nav-item"><a data-toggle="pill" href="#menu1"> Upcoming Events </a></li>
-            <li class="nav-item"><a data-toggle="pill" href="#menu2"> Past Events </a></li>
-            <li class="nav-item"><a data-toggle="pill" href="#menu3"> Current Events </a></li>
+          <ul class="mt-5 nav events nav-pills nav-fill justify-content-center">
+            <a class="col-4" data-toggle="pill" href="#menu1"> <li class="nav-item">Current Events </li></a>
+            <a class="col-4" data-toggle="pill" href="#menu2"> <li class="nav-item">Upcoming Events </li></a>
+            <a class="col-4" data-toggle="pill" href="#menu3"> <li class="nav-item">Past Events </li></a>
           </ul>
           
           <div class="tab-content mt-4">

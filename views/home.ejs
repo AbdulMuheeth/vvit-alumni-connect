@@ -17,16 +17,16 @@
     <%- include('header',{loggedin:loggedIn}); -%>
     <%- include('slider'); -%>
 
-    <!-- <center><h1 class="m-4 caption">REUNITE - REMINISCE - RECONNECT</h1></center> -->
+    <!-- <center><h1 class="m-4 caption">Welcome, to VVIT Alumni Connect</h1></center> -->
+
+    <!-- Recent Events -->
+    <%- include('./events/recentevents'); -%>
 
     <!-- Posts -->
     <%- include('./posts/postsSlider'); -%>
 
     <!-- Blog posts -->
     <%- include('./blog/blogSlider'); -%>
-
-    <!-- Recent Events -->
-    <%- include('recentevents'); -%>
 
     <!-- Map -->
     <%- include('map'); -%>

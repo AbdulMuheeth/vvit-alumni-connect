@@ -43,10 +43,6 @@
       font-family: 'Poppins', sans-serif;
   }
   
-  body {
-      min-height: 100vh;
-  }
-  
 #cardcontainer {
       margin-top: 100px;
   }
