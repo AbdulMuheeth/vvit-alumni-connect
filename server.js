@@ -48,7 +48,7 @@ app.use(session({
 app.use(passport.initialize());     // inititalizing the passport for the authentication
 app.use(passport.session()); 
 
-mongoose.connect(config.MONGO_URI,
+mongoose.connect(process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true }, err => {
         console.log('connected to db')
     }
