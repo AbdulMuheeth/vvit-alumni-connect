@@ -11,6 +11,7 @@ var fs = require('fs');
 var path = require('path')
 require('dotenv').config()
 const ejs = require("ejs")
+const config = require("./config")
 
 const User = require('./models/user')
 const Post = require('./models/post')
@@ -47,7 +48,7 @@ app.use(session({
 app.use(passport.initialize());     // inititalizing the passport for the authentication
 app.use(passport.session()); 
 
-mongoose.connect(process.env.MONGO_URI,
+mongoose.connect(config.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true }, err => {
         console.log('connected to db')
     }
