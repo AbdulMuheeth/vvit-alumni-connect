@@ -11,11 +11,19 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
     
     <title>Gallery</title>
+
+    <style>
+      @media only screen and (max-width: 480px) {
+       img {
+         width: 100%;
+       }
+      }
+    </style>
 </head>
 <body>
     <%- include("./../header",{loggedin:loggedIn}) -%>
     <div class="container">
-        <div class="jumbotron mt-5">
+        <div class="jumbotron mt-3">
             <h1 class="display-4">Gallery</h1>
             <p class="lead mt-4">Memories of a Lifetime with people you will never-ever forget!</p>
             <hr class="mt-4 mb-4">
@@ -26,9 +34,9 @@
         </div> 
 
         <div>
-          <div class="row">
+          <div class="">
             <% images.forEach((image) => { %>
-              <img class="col-lg-3 col-md-4 col-sm-12 mt-2" src="./../../uploads/<%= image.image %>" alt="<%= image.image %>" width="500px"/>
+              <img class="mt-2" src="./../../uploads/<%= image.image %>" alt="<%= image.image %>" width="500px"/>
             <% }) %> 
           </div>
         </div>
