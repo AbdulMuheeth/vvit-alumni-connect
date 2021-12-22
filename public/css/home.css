@@ -46,68 +46,7 @@
   height: 40px !important;
 }
 
-footer {
-  background-color: #00334e;
-  color: #f6f5f5;
-  margin-top: 30px;
-}
-
-.footer-container {
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
-.footer-container .content {
-  padding-left: 20px;
-}
-
-.social-media {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-i {
-  font-size: x-large;
-  color: #f6f5f5;
-}
-
-i:hover {
-  color: #ee6f57;
-}
-
-.logo img {
-  width: 90%;
-}
-
-.footer-about a {
-  color: #f6f5f5;
-}
-
-.footer-about a:hover {
-  color: #ee6f57;
-}
-
-@media only screen and (max-width: 760px) {
-  .logo img {
-    width: 70%;
-    align-self: center;
-  }
-
-  .logo {
-    margin-top: 30px;
-  }
-
-  .footer-about {
-    display: none;
-  }
-}
-
 @media only screen and (min-width: 900px) {
-  .footer-about {
-    margin-left: 20%;
-  }
-
   .post-card {
     height: 450px;
   }
