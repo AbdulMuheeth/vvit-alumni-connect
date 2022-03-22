@@ -30,12 +30,19 @@
                 <div class="d-flex flex-column align-items-center text-center">
                   <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                   <div class="mt-3">
+                    <% if(others && user.willtohelp) { %>
+                      <p class="badge rounded-pill bg-primary">Willing to help</p>
+                    <% } %>
                     <h4><%=user.fullname %></h4>
                     <p class="text-secondary mb-1"><%=user.occupation%></p>
                     <p class="text-muted font-size-sm"><%=user.role%></p>
                     <p class="text-muted font-size-sm"><%=user.address%></p>
-                    <!-- <button class="btn btn-primary">Follow</button>
-                    <button class="btn btn-outline-primary">Message</button> -->
+                    <% if (others && user.willtohelp) { %>
+                      <a class="btn btn-primary" href="mailto:<%=user.username%>"> contact through Mail</a>
+                      <% if (user.socialmedia.linkedin != "None") { %>
+                        <a class="btn btn-primary" href="mailto:<%=user.socialmedia.linkedin%>">Contact through LinkedIN</a> 
+                      <% } %>
+                    <% } %>
                   </div>
                 </div>
               </div>
@@ -91,6 +98,23 @@
                       <%=user.username%>
                   </div>
                 </div>
+                
+                <% if(!others) { %>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Willing to help</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <% if(user.willtohelp) { %>
+                        <p> Yes </p>
+                      <%} else { %>
+                        <p> No </p>
+                      <%}%>
+                    </div>
+                  </div>
+                <% } %>
+
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
@@ -110,11 +134,14 @@
                   </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <a class="btn btn-info " target="__blank" href="/editprofile">Edit</a>
+                
+                <% if (!others) {%>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" href="/editprofile">Edit</a>
+                    </div>
                   </div>
-                </div>
+                <% } %>
               </div>
             </div>
           </div>

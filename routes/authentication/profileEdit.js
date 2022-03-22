@@ -24,6 +24,7 @@ router.post('/',(req,res)=>{
                     foundUser.socialmedia.github = req.body.github;
                     foundUser.socialmedia.twitter = req.body.twitter;
                     foundUser.socialmedia.linkedin = req.body.linkedin;
+                    foundUser.willtohelp = req.body.willtohelp;
                     foundUser.fullname = req.body.fullname;
                     foundUser.username = req.body.email;
                     foundUser.address = req.body.address;

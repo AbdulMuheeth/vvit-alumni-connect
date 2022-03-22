@@ -75,7 +75,6 @@ app.use('/editprofile',profileEditRouter);
 app.use('/events',eventRouter)
 app.use('/gallery',galleryRouter)
 
-
 app.get("/", (req, res) => {
     res.redirect("/home")
 })
