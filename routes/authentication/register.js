@@ -13,12 +13,9 @@ router.get('/',(req,res)=>{
 
 router.post('/',(req,res)=>{
     const user = new User({
-        fullname:req.body.fullname,
+        email:req.body.email,
         username:req.body.username,
-        profilename:req.body.uname,
-        role:req.body.role,
-        address:req.body.address,
-        phone:req.body.phone
+        role:req.body.role
     })
     
     User.register(user,req.body.password,(err,user)=>{     // passport method // it is used add new credentials to the db
