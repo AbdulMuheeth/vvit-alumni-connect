@@ -8,7 +8,6 @@ function tm (date)
         return ''
     var now = date;
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    console.log(now)
     
     return now.toISOString().slice(0,10);
 }

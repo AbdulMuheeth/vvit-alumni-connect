@@ -98,7 +98,7 @@
                             <h6 class="card-subtitle mb-2 text-muted"><%= user.professionaldetails[i].company %>,  <%= user.professionaldetails[i].type %></h6>
                             <h6 class="card-subtitle mb-2 text-muted">
                               <%= user.professionaldetails[i].startdate.month %>, <%= user.professionaldetails[i].startdate.year %> to 
-                              <% if(user.professionaldetails[i].enddate.month) {%>
+                              <% if(user.professionaldetails[i].enddate.month !=-1) {%>
                                 <%= user.professionaldetails[i].enddate.month %>,
                               <%}%>
                               <% if(user.professionaldetails[i].enddate.year) {%>

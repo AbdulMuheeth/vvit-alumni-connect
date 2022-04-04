@@ -40,7 +40,6 @@
                                     <div class="d-flex flex-column lh-lg"> <i class='bx bxs-graduation'></i> <span>Post Graduation</span> </div>
                                 </button> </li>
                             </ul>
-                        
                                 <div class="tab-content" id="myTabContent">
 
                                     
@@ -66,7 +65,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="mt-4 d-flex justify-content-end"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="mt -4 d-flex justify-content-end" id="remove">
+                                                            <div class="m-3"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                        </div>
+                                                    </div>
                                                 </form>
                                             </div>
                                             
@@ -87,14 +91,19 @@
                                                     <div class="col-md-6 col-sm-12">
                                                         <div class="input-group mb-3"> <select class="form-select form-control" name="course" id="inputGroupSelect02">
                                                                 <option value="" selected>Select Course</option>
-                                                                <option value="1">CSE</option>
-                                                                <option value="2">ECE</option>
-                                                                <option value="3">IT</option>
+                                                                <option value="cse">CSE</option>
+                                                                <option value="ece">ECE</option>
+                                                                <option value="it">IT</option>
                                                             </select> </div>
                                                     </div>
                                                     
                                                 </div>
-                                                <div class="mt-4 d-flex justify-content-end"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                
+                                                <div class="row">
+                                                    <div class="mt-0 d-flex justify-content-end" id="remove">
+                                                        <div class="m-3"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -106,7 +115,11 @@
                                                     <div class="col-md-6 col-sm-12"> <input type="text" class="form-control" value="" name="city" placeholder="city"></div>
                                                     <div class="col-md-6 col-sm-12"> <input type="text" class="form-control" value="" name="country" placeholder="country"></div>
                                                     
-                                                    <div class="mt-4 d-flex justify-content-end"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                    <div class="row mb-3">
+                                                        <div class="mt -4 d-flex justify-content-end" id="remove">
+                                                            <div class="m-3"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -117,9 +130,13 @@
                                                 <div class="row">
                                                     <input type="hidden" value="company_experience" name="filterprop">
                                                     <div class="col-md-6 col-sm-12"> <input type="text" class="form-control" name="company" value="" placeholder="Company Name"></div>
-                                                    <div class="col-md-6 col-sm-12"> <input type="number" class="form-control" name="experience" value="" placeholder="Experience"></div>
+                                                    <div class="col-md-6 col-sm-12"> <input type="number" min="0" max="80" class="form-control" name="experience" value="" placeholder="Experience"></div>
 
-                                                    <div class="mt-4 d-flex justify-content-end"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                    <div class="row mb-3">
+                                                        <div class="mt -4 d-flex justify-content-end" id="remove">
+                                                            <div class="m-3"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -131,14 +148,23 @@
                                                     <input type="hidden" value="specialization" name="filterprop">
                                                     <div class="col-md-4 col-sm-12"> <input type="text" class="form-control" name="specialization" value="" placeholder="Specialization Course"></div>
                                                     <div class="col-md-4 col-sm-12"> <input type="text" class="form-control" name="college" value="" placeholder="College"></div>
-                                                    <div class="col-md-4 col-sm-12"> <input type="text" class="form-control" name="country" value="" placeholder="Country"></div>
+                                                    <div class="col-md-4 col-sm-12"> <input type="text" class="form-control" name="fieldofstudy" value="" placeholder="Field Of Study"></div>
 
-                                                    <div class="mt-4 d-flex justify-content-end"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                    <div class="row mb-3">
+                                                        <div class="mt -4 d-flex justify-content-end" id="remove">
+                                                            <div class="m-3"> <input class="btn btn-success custom-button px-5" type="submit" value="Add Filter"> </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
+                                <% if (filterapplied) {%>
+                                    <form class="d-flex justify-content-end" action="/profile/clearfilter" method="get">
+                                        <input class="m-0 btn btn-info custom-button" type="submit" value="Clear Filters"> 
+                                    </form> 
+                                <% } %>
                         </div>
                     </div>
                 </div>
@@ -146,23 +172,25 @@
         <div class="container m-1">
             <div class="row card-group">
             <% for (var i = 0; i < users.length; i++) { %>
+                <% if (users[i].profileupdated ) {%>
                 <div class="col-md-3 col-sm-12  m-3 d-flex justify-content-center">
-                    <div class="card" onclick="location.href='/profile/<%= users[i].profilename %>'">
+                    <div class="card" onclick="location.href='/profile/<%= users[i].username %>'">  
                         <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="card-img-top rounded-circle img-thumbnail" alt="profile_image" height="100px" >
-                        <% if(users[i].willtohelp) { %>
+                        <% if(users[i].profile.willtohelp) { %>
                             <p class="badge rounded-pill bg-primary d-flex justify-content-center ">Willing to help</p>
                         <% } %>
                         <div class="card-body">
-                            <h5 class="card-title text-center"><%= users[i].fullname %> </h5>
+                            <h5 class="card-title text-center"><%= users[i].profile.fullname %> </h5>
                             
-                            <h6 class="card-subtitle text-center text-muted"><%= users[i].role %> </h6>
-                            <h6 class="card-subtitle text-center text-muted"><%= users[i].username %> </h6>
+                            <h6 class="card-subtitle text-center text-muted">Batch of <%= users[i].profile.batch %></h6>
+                            <h6 class="card-subtitle text-center text-muted"><%= users[i].profile.course %> </h6>
                             
                         </div>
                     </div>
                 </div>
-            <% } %>
+            <% }} %>
             </div>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
