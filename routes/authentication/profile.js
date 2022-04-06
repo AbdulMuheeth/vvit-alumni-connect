@@ -4,7 +4,6 @@ const router = express.Router()
 
 
 const User = require("../../models/user");
-var cookieSession = require('cookie-session');
 const { rawListeners } = require('../../models/user');
 
 function tm (date)

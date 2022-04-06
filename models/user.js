@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
     moderator: {type: Boolean,default:false},
     administrator : {type: Boolean,default:false},
     profileupdated:{type:Boolean,default:false},
-
+    tokenvalidate:{
+        passchangereq:{type:Boolean,default:false},
+    },
     profile: {
         updated:{type:Boolean,default:false},
         image:{type:String,default:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"},
@@ -98,6 +100,8 @@ const userSchema = new mongoose.Schema({
             level:{type:String}
         }]
     },
+    hash:{type:String,default:""},
+    salt:{type:String,default:""},
 
 })
 

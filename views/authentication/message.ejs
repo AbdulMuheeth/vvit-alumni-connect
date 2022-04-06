@@ -50,6 +50,22 @@
         <% } else if(msg == "loggedin") { %>
             <h2> Your are logged in 😎✨</h2>
             <a href="/logout"> logout </a>
+        <% } else if(msg =="tkused") {%>
+            <h2> Password has changed 😎✨</h2>
+            <a href="/login"> Login Now </a>
+        <% }else if(msg =="nouser") {%>
+            <h2> Somthing went wrong User Not Found 🙁</h2>
+            <a href="#"> Raise issue or try again </a>
+        <% } else if(msg =="tkexpired") {%>
+            <h2> Link Expired 🙁</h2>
+            <a href="/validate/forgot"> Generate a new link  </a>
+        <% } else if(msg =="mailnotsent") {%>
+            <h2> Somthing went wrong while generating Mail 🙁</h2>
+            <a href="#"> Raise issue or try again </a>
+        <% } else if(msg =="mailsent") {%>
+            <h2> mail has been sent your email 😎✨</h2>
+            <span class="text-muted">check in spam mail if not found in the inbox</span>
+            <a href="/validate/forgot"> click here to send mail again </a>
         <% } %>
         <a href="/"> Go to Home Page </a>
     
