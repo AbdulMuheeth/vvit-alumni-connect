@@ -11,6 +11,10 @@ const blogSchema = new Schema ({
     body:  { type: String, required: true },
     image: { type: String },
     date: { type: Date, default: Date.now},
+    postedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'

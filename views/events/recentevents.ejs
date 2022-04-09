@@ -82,12 +82,13 @@
           </ul>
 
           <div class="tab-content">
-
             <div id="menu1" class="tab-pane fade" style="margin-top: 20px;">
               <% if(upcoming_events.length === 0) {%>
                 <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
                   <p> No Upcoming Events</p>
                 </div>
+              <% } else { %>
+                <hr/>
               <% } %>
               <% for(var i=0;i<upcoming_events.length;i++) { %>
                 <div class="row">
@@ -99,8 +100,9 @@
                   </div>
                   <div class="col-9">
                       <h5><%= upcoming_events[i].name %></h5>
-                      <p><%= upcoming_events[i].description %></p>
+                      <p><%= upcoming_events[i].tag %></p>
                   </div>
+                  <hr/>
                 </div>
               <% } %>
             </div>
@@ -110,6 +112,8 @@
                 <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
                   <p> No past Events</p>
                 </div>
+              <% } else { %>
+                <hr/>
               <% } %>
               <% for(var i=0;i<past_events.length;i++) { %>
                 <div class="row">
@@ -121,8 +125,9 @@
                   </div>
                   <div class="col-9">
                       <h5><%= past_events[i].name %></h5>
-                      <p><%= past_events[i].description %></p>
+                      <p><%= past_events[i].tag %></p>
                   </div>
+                  <hr/>
                 </div>
               <% } %>
             </div>
@@ -132,6 +137,8 @@
                 <div class="col-10 ml-3" style="margin-left: 8%;padding-left: 10%;">
                   <p> No Ongoing Events</p>
                 </div>
+              <% } else { %>
+                <hr/>
               <% } %>
               <% for(var i=0;i<ongoing_events.length;i++) { %>
                 <div class="row">
@@ -143,8 +150,9 @@
                   </div>
                   <div class="col-9">
                       <h5><%= ongoing_events[i].name %></h5>
-                      <p><%= ongoing_events[i].description %></p>
+                      <p><%= ongoing_events[i].tag %></p>
                   </div>
+                  <hr/>
                 </div>
               <% } %>
             </div>

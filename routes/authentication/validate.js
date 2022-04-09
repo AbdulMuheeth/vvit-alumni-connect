@@ -6,6 +6,9 @@ const Cryptr = require('cryptr');
 const md5 = require('md5');
 const { find } = require('../../models/user');
 
+const dotenv = require('dotenv')
+require('dotenv').config()
+
 const router = express.Router();
 const cryptr = new Cryptr(process.env.TK_SECRET_KEY)
 

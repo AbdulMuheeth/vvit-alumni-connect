@@ -1,0 +1,64 @@
+.navbar {
+    background-color: #00334e;
+}
+
+nav .navbar-nav li a{
+    color: white !important;
+}
+
+nav .navbar-nav .dropdown button{
+    color: white !important;
+}
+
+.navbar-collapse.collapse.in {
+    display: block!important;
+}
+
+.navbar .navbar-toggler .navbar-toggler-icon {
+    color: white !important;
+}
+
+.navbar .navbar-brand img{
+    height: 80px;
+}
+
+.main-logo {
+    margin: 0 auto;
+}
+
+.auth {
+    display: flex;
+}
+
+.navbar-toggler-icon {
+    justify-self: end;
+}
+
+.navs {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar2 {
+    background-color: #C84B31;
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.dropdown {
+    text-align: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .nav-logo {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .nav-logo {
+        width: 100%;
+    }
+}

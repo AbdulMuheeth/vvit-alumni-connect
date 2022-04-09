@@ -70,12 +70,14 @@
             <%- post.body %>
         </p>
 
-        <div class="mt-4">
-            <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-            <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </div>
+        <% if(user && post.postedBy.equals(user.id)) { %>
+            <div class="mt-4">
+                <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+                <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        <% } %>
 
         <%- include('./comments/commentBox') -%>
 
