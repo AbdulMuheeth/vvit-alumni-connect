@@ -82,7 +82,7 @@ router.get('/edit/:id', async (req, res) => {
     if(req.isAuthenticated) {
         const post = await Post.findById(req.params.id)
         if(post.postedBy.equals(req.user.id)) {
-            res.render('posts/edit', { post: post , loggedIn: req.isAuthenticated() })
+            res.render('posts/edit', { post: post , user: req.user, loggedIn: req.isAuthenticated() })
         } else {
             res.redirect('/posts')
         }
@@ -183,10 +183,6 @@ router.delete('/:postId/comments/:commentId', async (req, res) => {
         const comment = await Comment.findById(req.params.commentId)
 
         if(comment.commentedBy.equals(req.user.id)) {
-            const commentId = req.params.commentId
-            const postId = req.params.postId
-
-            const comment = await Comment.findById(commentId)
             await comment.delete()
         }
         
