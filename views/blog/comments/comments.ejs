@@ -1,25 +1,32 @@
 <div class="mb-5">
-    <h1>Comments</h1>
-    <% post.comments.forEach((comment) =>  { %>
-        <hr>
-        <div>
-            <div class="row">
-                <div class="col-10">
-                    <div class="name"><b><%= comment.author %></b></div>
-                    <p><%= comment.body %></p>
-                </div>
+    <h1 class="lead display-6">Comments</h1>
+    <hr>
 
-                <div class="col-2">
-                    <button class="edit-btn" onclick="window.location.href='<%= post.id %>/edit/comments/<%= comment.id %>';">
-                        <i class="fa fa-pencil"></i>
-                    </button>
+    <% if(post.comments.length === 0) { %>
+        <div><p class="lead display-7 d-flex justify-content-center">No comments on this post</p></div>
+    <% } else { %>
 
-                    <form action="/blog/<%= post.id %>/comments/<%= comment.id %>?_method=DELETE" method="post" class="d-inline">
-                        <button type="submit" class="del-btn"><i class="fa fa-trash"></i></button>
-                    </form>
-                </div>
+        <% post.comments.forEach((comment) =>  { %>
+            <div>
+                <div class="row comment mt-2">
+                        <div class="col-10">
+                            <div class="name"><b><%= comment.author %></b></div>
+                            <div><%= comment.body %></div>
+                        </div>
     
+                        <% if (user && comment.commentedBy.equals(user.id)) { %>
+                            <div class="col-1">
+                                <button class="edit-btn" onclick="window.location.href='<%= post.id %>/edit/comments/<%= comment.id %>';">
+                                    ✏️
+                                </button>
+            
+                                <form action="/blog/<%= post.id %>/comments/<%= comment.id %>?_method=DELETE" method="post" class="d-inline">
+                                    <button type="submit" class="del-btn"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
+                        <% } %>
+                </div>
             </div>
-        </div>
-    <% }) %>
+        <% }) %>
+    <% } %>
 </div>

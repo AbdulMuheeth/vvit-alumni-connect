@@ -28,11 +28,14 @@
             <h1 class="display-4">Gallery</h1>
             <p class="lead mt-4">Memories of a Lifetime with people you will never-ever forget!</p>
             <hr class="mt-4 mb-4">
-            <p class="lead">Add your college memories</p>
-            <p class="lead">
-              <a class="btn btn-primary btn mt-2" href="/gallery/new" role="button">+ Image</a>
-            </p>
-        </div> 
+
+            <% if(loggedIn) { %>
+              <p class="lead">Add your college memories</p>
+              <p class="lead">
+                <a class="btn btn-primary btn mt-2" href="/gallery/new" role="button">+ Image</a>
+              </p>
+            <% } %>
+        </div>   
 
         <div>
           <div class="">

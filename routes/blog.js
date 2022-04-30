@@ -8,7 +8,7 @@ const Comment = require('../models/comment')
 
 router.get("/", (req, res) => {
     Blog.find({}, (err, foundPosts) => {
-        res.render('./../views/blog/blogPosts', { posts: foundPosts, loggedIn: req.isAuthenticated() })
+        res.render('./../views/blog/blogPosts', { user: req.user, posts: foundPosts, loggedIn: req.isAuthenticated() })
     })
 })
 
@@ -17,24 +17,31 @@ router.get("/", (req, res) => {
 // CREATE BLOG POST 
 
 router.get("/new", (req, res) => {
-    res.render('./../views/blog/newBlogPost',{ loggedIn: req.isAuthenticated() })
+    if(req.isAuthenticated())
+        res.render('./../views/blog/newBlogPost', {loggedIn: req.isAuthenticated()})
+    else
+        res.redirect('/login')
 })
 
 router.post("/new", async (req, res) => {
 
-    console.log(req.body)
-
-    const newPost = new Blog({
-        title: req.body.blogPostTitle,
-        author: req.body.authorName,
-        description: req.body.blogPostDesc,
-        body: req.body.blogPostContent,
-        image: req.body.blogImage
-    })
-
-    await newPost.save()
-
-    res.redirect("/blog/" + newPost.id)
+    if(req.isAuthenticated()) {
+        const newPost = new Blog({
+            title: req.body.blogPostTitle,
+            author: req.user.username,
+            description: req.body.blogPostDesc,
+            body: req.body.blogPostContent,
+            image: req.body.blogImage,
+            postedBy: req.user.id
+        })
+    
+        await newPost.save()
+    
+        res.redirect("/blog/" + newPost.id)
+    }
+    else {
+        res.redirect('/login')
+    }
 })
 
 // READ BLOG POST
@@ -44,7 +51,7 @@ router.get("/:id", (req, res) => {
     const postId = req.params.id
 
     Blog.findById(postId).populate('comments').exec((err, post) => {
-        res.render("./../views/blog/blogPost", {post: post, loggedIn: req.isAuthenticated() })
+        res.render("./../views/blog/blogPost", {post: post, user: req.user, loggedIn: req.isAuthenticated() })
     })
 })
 
@@ -52,23 +59,41 @@ router.get("/:id", (req, res) => {
 
 router.get('/edit/:id', async (req, res) => {
     const post = await Blog.findById(req.params.id)
-    res.render('Blog/edit', { post: post, loggedIn: req.isAuthenticated()  })
+    if(req.isAuthenticated() ) {
+        if(post.postedBy.equals(req.user.id)) {
+            res.render('Blog/edit', { post: post, user: req.user, loggedIn: req.isAuthenticated()  })
+        } else {
+            res.redirect('/blog/' + req.params.id)
+        }
+    } else {
+        res.redirect('/login')
+    }
 })
 
 router.put('/:id', async (req, res) => {
 
-    await Blog.findByIdAndUpdate(
-        req.params.id,
-        {
-            author: req.body.authorName,
-            title: req.body.blogPostTitle,
-            description: req.body.blogPostDesc,
-            body: req.body.blogPostContent,
-            image: req.body.blogImage
+    const post = await Blog.findById(req.params.id)
+    if(req.isAuthenticated() ) {
+        if(post.postedBy.equals(req.user.id)) {
+
+            await Blog.findByIdAndUpdate(
+                req.params.id,
+                {
+                    author: req.user.username,
+                    title: req.body.blogPostTitle,
+                    description: req.body.blogPostDesc,
+                    body: req.body.blogPostContent,
+                    image: req.body.blogImage
+                }
+            )
+            
+            res.redirect(`/blog/${req.params.id}`)
+        } else {
+            res.redirect('/blog/' + req.params.id)
         }
-    )
-    
-    res.redirect(`/blog/${req.params.id}`)
+    } else {
+        res.redirect('/login')
+    }
 })
 
 
@@ -76,71 +101,100 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const postId = req.params.id
+    const post = await Blog.findById(req.params.id)
+    if(req.isAuthenticated() ) {
+        if(post.postedBy.equals(req.user.id)) {
+            await Blog.findByIdAndDelete(postId)
+        }
 
-    await Blog.findByIdAndDelete(postId)
-    res.redirect('/blog')
+        res.redirect('/blog')
+    } else {
+        res.redirect('/login')
+    }
 })
-
-module.exports = router;
 
 
 // ------- COMMENTS TO BLOG 
 
 // ---- ADD A NEW COMMENT
 router.post('/:id/comment', async (req, res) => {
+    if(req.isAuthenticated()) {
+        const comment = await new Comment({
+            author: req.user.username,
+            commentedBy: req.user.id,
+            body: req.body.body
+        })
 
-    const comment = await new Comment({
-        author: req.body.name,
-        body: req.body.body
-    })
-
-    await comment.save(async (err, result) => {
-        if(err) {
-            console.log(err)
-        } else {
-            Blog.findById(req.params.id, async (err, post) => {
-                if(err) { console.log(err) }
-                else {
-                    await post.comments.push(result)
-                    await post.save()
-                }
-            })
-        }
-    })
-
-    res.redirect(`/blog/${req.params.id}`)
+        await comment.save(async (err, result) => {
+            if(err) {
+                console.log(err)
+            } else {
+                Blog.findById(req.params.id, async (err, post) => {
+                    if(err) { console.log(err) }
+                    else {
+                        await post.comments.push(result)
+                        await post.save()
+                        res.redirect(`/blog/${req.params.id}`)
+                    }
+                })
+            }
+        })
+    } else {
+        res.redirect('/login')
+    }
 }) 
 
 // ---- UPDATE A COMMENT
 
 router.get('/:postId/edit/comments/:commentId', async (req, res) => {
-    const comment = await Comment.findById(req.params.commentId)
+    if(req.isAuthenticated()) {
+        const comment = await Comment.findById(req.params.commentId)
 
-    Blog.findById(req.params.postId).populate('comments').exec((err, post) => {     
-        res.render("./../views/blog/comments/editComment", {post: post, editComment: comment, loggedIn: req.isAuthenticated() })
-    })
+        if(comment.commentedBy.equals(req.user.id)) {
+            Blog.findById(req.params.postId).populate('comments').exec((err, post) => {   
+                const myPost = (req.user && post.postedBy.equals(req.user.id))  
+                res.render("./../views/blog/comments/editComment", {user: req.user, postedByMe: myPost, post: post, editComment: comment, loggedIn: req.isAuthenticated() })
+            })
+        } else {
+            res.redirect(`/blog/${req.params.postId}`)
+        }
+    } else {
+        res.redirect('/login')
+    }
 })
 
 router.put('/:postId/comments/:commentId', async (req, res) => {
 
-    await Comment.findByIdAndUpdate(
-        req.params.commentId,
-        {
-            author:req.body.name,
-            body: req.body.body,
-        }
-    )
+    if(req.isAuthenticated()) {
+        const comment = await Comment.findById(req.params.commentId)
 
-    res.redirect(`/blog/${req.params.postId}`)
+        if(comment.commentedBy.equals(req.user.id)) {
+            await Comment.findByIdAndUpdate(
+                req.params.commentId,
+                {
+                    body: req.body.body,
+                }
+            )
+        }
+        res.redirect(`/blog/${req.params.postId}`)
+    } else {
+        res.redirect('/login')
+    }
 })
 
 // DELETE A COMMENT
 router.delete('/:postId/comments/:commentId', async (req, res) => {
-    const commentId = req.params.commentId
-    const postId = req.params.postId
+    if(req.isAuthenticated()) {
+        const comment = await Comment.findById(req.params.commentId)
 
-    const comment = await Comment.findById(commentId)
-    await comment.delete()
-
-    res.redirect(`/blog/${postId}`)
+        if(comment.commentedBy.equals(req.user.id)) {
+            await comment.delete()
+        }
+        
+        res.redirect(`/blog/${req.params.postId}`)
+    } else {
+        res.redirect('/login')
+    }
 })
+
+module.exports = router;

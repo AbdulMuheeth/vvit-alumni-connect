@@ -22,9 +22,11 @@
         <div class="jumbotron">
             <h1 class="display-4">Blog Posts</h1>
             <p class="lead">Share your story or journey, create a blog post!!</p>
-            <p class="lead">
-              <a class="btn btn-success btn-lg" href="/blog/new" role="button"> + New post</a>
-            </p>
+            <% if(user) { %>
+                <p class="lead">
+                    <a class="btn btn-success btn-lg" href="/blog/new" role="button"> + New post</a>
+                </p>
+            <% } %>
         </div>
     
         <div class="cards">
@@ -40,15 +42,21 @@
                     
                         <div>
                             <a href="/blog/<%= post.id %>" class="btn btn-primary">Read post</a>
-                            <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-                            <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            <% if(user && post.postedBy.equals(user.id)) { %>
+                                <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+                                <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            <% } %>
                         </div>
                     </div>
                 </div>
 
             <% }) %>
+
+            <% if(posts.length === 0) { %>
+                <p class="lead display-7"> No Blog posts! </p>
+            <% } %>
         </div>
     </div>
 

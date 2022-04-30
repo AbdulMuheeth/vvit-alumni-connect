@@ -10,6 +10,10 @@ const postSchema = new Schema ({
     image: { type: String },
     body:  { type: String, required: true },
     date: { type: Date, default: Date.now},
+    postedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'

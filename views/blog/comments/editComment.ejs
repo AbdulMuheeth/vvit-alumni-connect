@@ -7,6 +7,7 @@
     <title><%= post.title %></title>
 
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='/css/footer.css'/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -41,8 +42,14 @@
             height: 40px;
             border-radius: 50%;
             border: 0px;
-            color: white;
-            background-color: blue;
+            background-color:white;
+        }
+
+        .comment {
+            background-color: #EEEEEE;
+            border: 1px solid #EEEEEE;
+            border-radius: 10px;
+            padding: 7px;
         }
     </style>
 </head>
@@ -70,22 +77,19 @@
             <%- post.body %>
         </p>
 
-        <div class="mt-4">
-            <a href="/blog/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-            <form action="/blog/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </div>
+        <% if(postedByMe) { %>
+            <div class="mt-4 mb-5">
+                <a href="/posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+                <form action="/posts/<%= post.id %>?_method=DELETE" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        <% } %>
 
         <div>
-            <h1>Edit your comment</h1>
+            <h1 class="lead display-6">Edit your comment</h1>
             <hr>
             <form action="/blog/<%= post.id %>/comments/<%= editComment.id %>?_method=PUT" method="post">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input id="name" name="name" value="<%= editComment.author %>" class="form-control"/>
-                </div>
-                <br>
                 <div class="form-group">
                     <label for="comment">Comment</label>
                     <textarea id="comment" name="body" class="form-control" rows="2"><%= editComment.body %></textarea>
@@ -96,33 +100,34 @@
         </div>
 
         <div class="mb-5">
-            <h1>Comments</h1>
+            <h1 class="lead display-6">Comments</h1>
             <% post.comments.forEach((comment) =>  { %>
                 <% if(editComment.id !== comment.id) { %>
-                    <hr>
                     <form>
-                            <div class="row">
+                            <div class="row comment mt-2">
                                 <div class="col-10">
                                     <div class="name"><b><%= comment.author %></b></div>
                                     <p><%= comment.body %></p>
                                 </div>
                 
-                                <div class="col-2">
-                                    <button class="edit-btn" onclick="window.location.href='<%= post.id %>/edit/comments/<%= comment.id %>';">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                
-                                    <form action="/blog/<%= post.id %>/comments/<%= comment.id %>?_method=DELETE" method="post" class="d-inline">
-                                        <button type="submit" class="del-btn"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                </div>
+                                <% if (user && comment.commentedBy.equals(user.id)) { %>
+                                    <div class="col-2">
+                                        <button class="edit-btn" onclick="window.location.href='<%= post.id %>/edit/comments/<%= comment.id %>';">
+                                            ✏️
+                                        </button>
                     
+                                        <form action="/posts/<%= post.id %>/comments/<%= comment.id %>?_method=DELETE" method="post" class="d-inline">
+                                            <button type="submit" class="del-btn"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                <% } %>
                             </div>
                     </form>
                 <% } %>
             <% }) %>
         </div>
-
     </div>
+
+    <%- include('./../../footer') -%>
 </body>
 </html>
