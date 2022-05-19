@@ -20,12 +20,17 @@ const sendanemail = (tolist,templatetype,templateobj)=>{
 
     let filename;
     let sub="mail from alumni connect";
+
     if (templatetype == "event")
         {filename = "eventTemplate.ejs";sub=`${templateobj.name} Event is Here🥳🎉`}
 
     else if(templatetype == "verification")
         {filename = "emailverificationTemplate.ejs";}
+
+    else if(templatetype == "forgotpassword")
+        {filename = "forgotpassword.ejs";sub="Link to reset the Password";}
     
+
     let reqpath = path.join(__dirname,`../views/templates/`);
 
     ejs.renderFile(reqpath+`${filename}`, { obj:templateobj }, function (err, data) {  

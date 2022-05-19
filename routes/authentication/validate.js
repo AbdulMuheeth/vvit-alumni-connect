@@ -4,16 +4,9 @@ const nodemailer = require('nodemailer');
 const User = require('../../models/user');
 const Cryptr = require('cryptr');
 const md5 = require('md5');
-const { find } = require('../../models/user');
-const { google } = require('googleapis')
-const OAuth2 = google.auth.OAuth2
+// const { find } = require('../../models/user');
 
-const OAuth2_client = new OAuth2(process.env.CLIENT_ID,process.env.CLIENT_SECRET)
-OAuth2_client.setCredentials({refresh_token:process.env.REFRESH_TOKEN})
-
-const dotenv = require('dotenv')
-require('dotenv').config()
-
+const mail = require("../../functionalities/mailTransporter");
 const router = express.Router();
 const cryptr = new Cryptr(process.env.TK_SECRET_KEY)
 
@@ -51,7 +44,6 @@ router.post('/forgot',async (req,res)=>{
                 ts = new Date()
                 const encrypt_id = cryptr.encrypt(foundUser._id)
                 const encrypt_ts = cryptr.encrypt(ts.getTime())
-
                 
                 const hash_str = ts.getTime().toString()+foundUser._id.toString()+foundUser.email
                 
@@ -64,59 +56,19 @@ router.post('/forgot',async (req,res)=>{
                         console.log(err)
                 })
 
-                try
-                {
-                    const email =  async ()=>{
-
-                        const accessToken = OAuth2_client.getAccessToken()
-
-                        const transporter = nodemailer.createTransport({
-                            
-                            service:'gmail',
-                            auth: {
-                                type:'OAuth2',
-                                user: process.env.EMAIL,
-                                clientId:process.env.CLIENT_ID,
-                                clientSecret:process.env.CLIENT_SECRET,
-                                refreshToken:process.env.REFRESH_TOKEN,
-                                accessToken:accessToken
-                            },
-                            secure: true, // upgrades later with STARTTLS -- change this based on the PORT
-                        });
-        
-        
-                        const mailData = {
-                            from: 'ALUMNI Connect : noreply-vvit-alumni@gmail.com',
-                            to: given_email,
-                            subject: "Link to reset the Password",
-                            text: "hi there click on the below link to reset the password",
-                            html: '<b>Hey there! </b><br><a href="http://localhost:5000/validate/'+encrypt_ts+'/'+encrypt_id+'/'+hashed+'">http://localhost:5000/validate/'+encrypt_ts+'/'+encrypt_id+'/'+hashed+'</a><br/>',
-                        };
-                        
-                        console.log("mail sent________________")
-                        try
-                        {
-                            await transporter.sendMail(mailData)
-                            transporter.close();
-                        }
-                        catch
-                        {
-                            return "error"
-                        }
-                        
-                    }
+                
                     
                     // sending the mail 
-                    let resp = email()
+                    const obj = {link : `http://localhost:5000/validate/${encrypt_ts}/${encrypt_id}/${hashed}`,user:foundUser.username}
+                    mail.sendanemail(given_email,"forgotpassword",obj);
+                    // let resp = email()
                     // console.log(res)
                     res.render("authentication/message",{msg:"mailsent",loggedIn:req.isAuthenticated()})
                     // res.status(200).send({ message: "Mail send" });
-                }
-                catch
-                {
-                    res.render("authentication/message",{msg:"mailnotsent",loggedIn:req.isAuthenticated()})
+            
+                    // res.render("authentication/message",{msg:"mailnotsent",loggedIn:req.isAuthenticated()})
                     // res.status(500).send({ message: "err" });
-                }
+                
                 
                 
                 
