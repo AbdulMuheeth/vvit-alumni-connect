@@ -43,39 +43,43 @@
         </div>
       <% } %>
   
-      <div  class="mt-5">
+      
         <% if(event.guests.length != 0) { %>  
+          <div  class="mt-5">
           <% if(event.guests.length == 1) { %>  
             <h1> Guest </h1> <br>
           <% } else { %>
             <h1> Guest's </h1> <br>
           <% } %>
   
-          <% event.guests.forEach((guest) => { %>
-            <div class="col-md-4 col-sm-12">
-                <div class="card p-0">
-                    <div class="card-image"> <img src="<%=guest.guestimage%>" alt=""> </div>
-                    <div class="card-content d-flex flex-column align-items-center">
-                        <h4 class="pt-2"><%= guest.guestname %></h4>
-                        <h5><%= guest.guestfield %></h5>
-                        <ul class="social-icons d-flex justify-content-center">
-                          <% if(guest.profile.facebook != "None"){ %>
-                            <li style="--i:1"> <a href="<%= guest.profile.facebook %>"> <span class="fa fa-facebook"></span> </a> </li>
-                          <% } %>
-                          <% if(guest.profile.twitter != "None"){ %>
-    
-                            <li style="--i:2"> <a href="<%= guest.profile.twitter %>"> <span class="fa fa-twitter"></span> </a> </li>
-                          <% } %>
-                          <% if(guest.profile.instagram != "None"){ %>
+          <div class="row">
+            <% event.guests.forEach((guest) => { %>
+              <div class="col-md-4 col-sm-12">
+                  <div class="card p-0">
+                      <div class="card-image"> <img src="<%=guest.guestimage%>" alt=""> </div>
+                      <div class="card-content d-flex flex-column align-items-center">
+                          <h4 class="pt-2"><%= guest.guestname %></h4>
+                          <h5><%= guest.guestfield %></h5>
+                          <ul class="social-icons d-flex justify-content-center">
+                            <% if(guest.profile.facebook != "None"){ %>
+                              <li style="--i:1"> <a href="<%= guest.profile.facebook %>"> <span class="fa fa-facebook"></span> </a> </li>
+                            <% } %>
+                            <% if(guest.profile.twitter != "None"){ %>
       
-                            <li style="--i:3"> <a href="<%= guest.profile.instagram %>"> <span class="fa fa-instagram"></span> </a> </li>
-                          <% } %>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-          <% }) }  %>
-      </div>
+                              <li style="--i:2"> <a href="<%= guest.profile.twitter %>"> <span class="fa fa-twitter"></span> </a> </li>
+                            <% } %>
+                            <% if(guest.profile.instagram != "None"){ %>
+        
+                              <li style="--i:3"> <a href="<%= guest.profile.instagram %>"> <span class="fa fa-instagram"></span> </a> </li>
+                            <% } %>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+        <% } %>
     
       <section id="about">
         <div class="about" style="margin-top: 50px;">

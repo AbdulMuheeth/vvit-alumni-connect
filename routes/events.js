@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../models/event');
+const User = require("../models/user");
 
+const mail = require("../functionalities/mailTransporter");
 
 function tm (date)
 {
@@ -79,7 +81,18 @@ router.post('/newevent',(req,res)=>{
             if(req.body.image != '')
                 image_gallery_arr.push(req.body.image); 
         }
-
+        
+        let receivers = [];
+        if(typeof(req.body.emailreceiver) === 'object')
+        {
+            receivers = [...req.body.emailreceiver];
+        }
+        else if(typeof(req.body.guestName) === 'string' )
+        {
+            receivers.push(req.body.emailreceiver);
+        }
+        console.log(receivers)
+        
         var status = 'upcoming'
         const startDate = new Date(req.body.startDate)
         const endDate = new Date(req.body.endDate)
@@ -98,7 +111,7 @@ router.post('/newevent',(req,res)=>{
         }
 
         console.log(status);
-        
+
         const event =  new Event({
             name:req.body.eventName,
             description:req.body.eventDescription,
@@ -122,12 +135,29 @@ router.post('/newevent',(req,res)=>{
                 console.log(err);
                 return;
             }
-            res.redirect('/');
+            res.redirect('/events');
         })
-    }
-    else
-    {
-        res.status(404).render('404');
+
+        // sending email's
+        User.find({role:{$in:receivers}},(err,foundUsers)=>{   
+            listOfEmails = []
+            foundUsers.map(x=>{
+                listOfEmails.push(x.email);
+            })
+            // console.log(listOfEmails.toString());
+            let val = {...(event._doc)};
+            console.log(val);
+            val.duration.start = tm(event.duration.start);
+            console.log(val);
+
+            // res.send(listOfEmails);  
+            mail.sendanemail(listOfEmails.toString(),"event",val);
+            console.log(event);
+        })
+        }
+        else
+        {
+                res.status(404).render('404');
     }  
 })
 

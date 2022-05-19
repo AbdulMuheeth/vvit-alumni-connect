@@ -30,6 +30,7 @@ const profileRouter = require('./routes/authentication/profile')
 const profileEditRouter = require('./routes/authentication/profileEdit')
 const eventRouter = require('./routes/events')
 const galleryRouter = require('./routes/gallery')
+const dashBoardRouter = require('./routes/dashboard')
 
 const app = express()
 
@@ -77,6 +78,7 @@ app.use('/profile',profileRouter);
 app.use('/editprofile',profileEditRouter);
 app.use('/events',eventRouter)
 app.use('/gallery',galleryRouter)
+app.use('/dashboard',dashBoardRouter)
 
 app.get("/", (req, res) => {
     res.redirect("/home")

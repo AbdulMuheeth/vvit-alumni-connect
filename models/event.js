@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const eventSchema = mongoose.Schema({
     name:{type:String,required:true},
-    description:{type:String,required:true},
+    description:{type:String},
     tag:{type:String,default:"this is the tagline of the event"},
     guests:[{
         guestname : {type:String},

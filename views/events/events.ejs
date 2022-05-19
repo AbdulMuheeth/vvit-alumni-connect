@@ -1,81 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Events</title>
 
-    <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
 
     <style>
-        th {
-            padding-right: 5px;
-        }
+      th {
+        padding-right: 5px;
+      }
 
-        .btn-primary {
-            background-color: #C84B31 !important;
-            border: 1px solid #C84B31 !important;
-        }
+      .btn-primary {
+        background-color: #c84b31 !important;
+        border: 1px solid #c84b31 !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('../header',{loggedin:loggedIn}); -%>
 
     <div class="container">
+      <div class="jumbotron mt-3">
+        <h1 class="display-4">Events</h1>
 
-        <div class="jumbotron mt-3">
-            <h1 class="display-4">Events</h1>
+        <% if(admin) {%>
+        <p class="lead" style="margin-left: 5%">
+          Create a New Event
+          <a
+            class="btn btn-success btn-lg"
+            style="margin-left: 5%"
+            href="/events/newevent"
+            role="button"
+          >
+            + New Event</a
+          >
+        </p>
+        <% } %>
+      </div>
 
-            <% if(admin) {%>
-                <p class="lead" style="margin-left:5%">
-                    Create a New Event
-                <a class="btn btn-success btn-lg" style="margin-left:5%" href="/events/newevent" role="button"> + New Event</a>
-                </p>
-            <% } %>
-        </div>
-
-        <div class="row card-group">
+      <div class="row">
         <% events.forEach((event) => { %>
-            <div class="col-md-4 col-sm-12  mt-3">
-                <div class="card" onclick="location.href='/events/<%= event.id %>'">
-                    <img class="card-img-top" height="200" src="<%= event.images.profile %>" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= event.name %></h5>
-                      <p class="card-text text-muted"><%= event.tag %></p>
-                      <!-- <p class="card-text"><%= event.description %></p> -->
-                     
-                      <table>
-                          <tr>
-                              <th>Starts at </th>
-                              <td><%= event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%></td>
-                          </tr>
+        <div class="col-xl-1 col-xl-3 col-md-4 col-sm-6 mt-3">
+          <div class="card" onclick="location.href='/events/<%= event.id %>'">
+            <img
+              class="card-img-top"
+              height="200"
+              src="<%= event.images.profile %>"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= event.name %></h5>
+              <p class="card-text text-muted"><%= event.tag %></p>
+              <!-- <p class="card-text"><%= event.description %></p> -->
 
-                          <tr>
-                            <th>Ends at </th>
-                            <td><%= event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%></td>
-                          </tr>
-                      </table>
+              <table>
+                <tr>
+                  <th>Starts at</th>
+                  <td>
+                    <%=
+                    event.duration.start.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%>
+                  </td>
+                </tr>
 
-                      <a href="/events/<%= event._id %>" class="btn btn-primary mt-2">View Event</a>
-                    
-                      <% if(admin) {%>
-                        <a class="btn btn-outline-info" href="/events/edit/<%= event.id %>"> Edit </a>
+                <tr>
+                  <th>Ends at</th>
+                  <td>
+                    <%=
+                    event.duration.end.toLocaleString('default',{month:'short',weekday:'long',year:'numeric',day:'numeric'})%>
+                  </td>
+                </tr>
+              </table>
 
-                        <form action="/events/<%= event.id %>?_method=DELETE" method="post" class="d-inline">
-                            <input type='submit' class="btn btn-outline-danger" value="Delete Event">
-                        </form>
-                      <% } %>
-                    
-                    </div>
-                </div>
+              <a href="/events/<%= event._id %>" class="btn btn-primary mt-2"
+                >View Event</a
+              >
+
+              <% if(admin) {%>
+              <a
+                class="btn btn-outline-info"
+                href="/events/edit/<%= event.id %>"
+              >
+                Edit
+              </a>
+
+              <form
+                action="/events/<%= event.id %>?_method=DELETE"
+                method="post"
+                class="d-inline"
+              >
+                <input
+                  type="submit"
+                  class="btn btn-outline-danger"
+                  value="Delete Event"
+                />
+              </form>
+              <% } %>
             </div>
-        <% }) %>
+          </div>
         </div>
+        <% }) %>
+      </div>
     </div>
-</body>
+  </body>
 </html>
