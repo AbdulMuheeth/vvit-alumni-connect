@@ -12,11 +12,13 @@ var fs = require('fs');
 var path = require('path')
 require('dotenv').config()
 const ejs = require("ejs")
+const nodeCron = require('node-cron')
 
 const User = require('./models/user')
 const Post = require('./models/post')
 const Blog = require('./models/blog')
 const Event = require('./models/event')
+const mail = require('./functionalities/mailTransporter')
 
 const postRouter = require('./routes/posts')
 const blogRouter = require('./routes/blog')
@@ -153,10 +155,36 @@ app.get("/home", async (req, res) => {
          loggedIn: req.isAuthenticated()
     })
 
+    
+})
+var monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
+var d = new Date();
+
+//send birthday emails:
+User.find({},(err,foundUser)=>{
+    foundUser.forEach((x)=>{
+        if (x.personalinfo.dob != undefined || x.personalinfo.dob != null)
+        {
+            
+            let dt = new Date(x.personalinfo.dob)
+            
+            const task = nodeCron.schedule(`0 13 14 ${dt.getDate()} ${monthNames[dt.getMonth()]} *`, () => {
+            
+                    obj = {
+                        name:x.username,
+                        email:x.email,
+                    }
+                    mail.sendanemail(obj.email,"birthday",obj)
+                    console.log(`Message send: `)
+            });
+            task.start();
+        }
+    })
 })
 
 app.get('*',async(req,res)=>{
     res.status(404).render('404');
+
 })
 
 const PORT = process.env.PORT || 5000;
