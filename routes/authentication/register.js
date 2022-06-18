@@ -28,6 +28,7 @@ router.post('/',(req,res)=>{
         email:req.body.email,
         username:req.body.username,
         role:req.body.role,
+        regid:req.body.regid,
         personalinfo:{dob:new Date(req.body.dob)}
     })
 

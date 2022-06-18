@@ -68,10 +68,6 @@ router.post('/forgot',async (req,res)=>{
             
                     // res.render("authentication/message",{msg:"mailnotsent",loggedIn:req.isAuthenticated()})
                     // res.status(500).send({ message: "err" });
-                
-                
-                
-                
             }
             else
             {

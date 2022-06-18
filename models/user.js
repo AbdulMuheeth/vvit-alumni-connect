@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     moderator: {type: Boolean,default:false},
     administrator : {type: Boolean,default:false},
     profileupdated:{type:Boolean,default:false},
+    regid:{type:String,default:null},
     tokenvalidate:{
         passchangereq:{type:Boolean,default:false},
     },
@@ -27,7 +28,7 @@ const userSchema = new mongoose.Schema({
         twitter: {type:String, default:""},
         linkedin: {type:String, default:""},
         batch:{type:Number,default:null,length:4},
-        course:{type:String,default:null}
+        course:{type:String,default:null},
     },
     professionaldetails:[{
         title:{type:String,},

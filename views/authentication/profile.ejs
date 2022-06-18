@@ -37,6 +37,9 @@
                         <% } %>
                         <h4><%=user.profile.fullname %></h4>
                         <% var edyear = user.profile.batch+4 %>
+                        <% if(user.regid){ %>
+                          <p class="text-secondary mb-1"><%=user.regid %></p>
+                        <% } %>
                         <p class="text-secondary mb-1"><%=user.profile.batch%> to <%= edyear %></p>
                         <p class="text-secondary mb-1"><%=user.profile.course%></p>
                         <% if (others && user.profile.willtohelp) { %>
@@ -46,6 +49,7 @@
                           <% } %>
                         <% } %>
                       </div>
+                      
                     </div>
                   </div>
                 </div>

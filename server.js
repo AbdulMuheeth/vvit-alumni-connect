@@ -168,7 +168,7 @@ User.find({},(err,foundUser)=>{
             
             let dt = new Date(x.personalinfo.dob)
             
-            const task = nodeCron.schedule(`0 13 14 ${dt.getDate()} ${monthNames[dt.getMonth()]} *`, () => {
+            const task = nodeCron.schedule(`0 00 10 ${dt.getDate()} ${monthNames[dt.getMonth()]} *`, () => {
             
                     obj = {
                         name:x.username,
