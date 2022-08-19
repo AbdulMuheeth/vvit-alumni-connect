@@ -10,7 +10,6 @@ const mail = require("../../functionalities/mailTransporter");
 const router = express.Router();
 const cryptr = new Cryptr(process.env.TK_SECRET_KEY)
 
-
 function tm(ts)
 {
     var now = ts;

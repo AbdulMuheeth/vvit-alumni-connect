@@ -30,10 +30,24 @@ router.post("/new", async (req, res) => {
 
 // ------------------ ALL POSTS -----------------
 
-router.get("/", (req, res) => {
-    Post.find({}, (err, foundPosts) => {
-        res.render('./../views/posts/posts', { user: req.user, posts: foundPosts, loggedIn: req.isAuthenticated() })
-    })
+router.get("/pages/:page", async (req, res) => {
+    const perPage = 3
+    const page = req.params.page || 1
+    let totalPosts = await Post.find({}).count();
+
+    Post.find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec((err, foundPosts) => {
+            console.log(totalPosts, Math.ceil(totalPosts / perPage))
+            res.render('./../views/posts/posts', { 
+                user: req.user, 
+                posts: foundPosts, 
+                loggedIn: req.isAuthenticated(),
+                current: page,
+                pages: Math.ceil(totalPosts / perPage) 
+            })
+        })
 })
 
 

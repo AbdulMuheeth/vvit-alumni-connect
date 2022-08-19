@@ -6,10 +6,24 @@ const Comment = require('../models/comment')
 
 // ------------------ ALL BLOG POSTS -----------------
 
-router.get("/", (req, res) => {
-    Blog.find({}, (err, foundPosts) => {
-        res.render('./../views/blog/blogPosts', { user: req.user, posts: foundPosts, loggedIn: req.isAuthenticated() })
-    })
+router.get("/pages/:page", async (req, res) => {
+    const perPage = 3
+    const page = req.params.page || 1
+    let totalPosts = await Blog.find({}).count();
+
+    Blog.find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec((err, foundPosts) => {
+            console.log(totalPosts, Math.ceil(totalPosts / perPage))
+            res.render('./../views/blog/blogPosts', { 
+                user: req.user, 
+                posts: foundPosts, 
+                loggedIn: req.isAuthenticated(),
+                current: page,
+                pages: Math.ceil(totalPosts / perPage) 
+            })
+        })
 })
 
 // ----------------- CRUD OPERATIONS ON BLOG POST ------
