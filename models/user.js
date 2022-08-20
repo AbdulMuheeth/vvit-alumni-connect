@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
     administrator : {type: Boolean,default:false},
     profileupdated:{type:Boolean,default:false},
     regid:{type:String,default:null},
+    accessgivenby : {type:String,default:null}, // specifices the username of the accessor giver
+    accessrevokedby : {type:String,default:null},
     tokenvalidate:{
         passchangereq:{type:Boolean,default:false},
     },

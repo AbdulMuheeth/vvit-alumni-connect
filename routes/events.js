@@ -17,7 +17,7 @@ function tm (date)
 router.get('/newevent',(req,res)=>{
     if(req.isAuthenticated() && req.user.administrator)
     {
-        res.render('events/eventform', { loggedIn: req.isAuthenticated() });
+        res.render('events/eventform', { user: req.user,loggedIn: req.isAuthenticated() });
     }
     else
     {
@@ -166,9 +166,9 @@ router.get('/',(req,res)=>{
 
     Event.find({},(err,foundEvents) => {
         if(req.user === undefined)
-            res.render('events/events',{events : foundEvents, admin: false, loggedIn: req.isAuthenticated()});
+            res.render('events/events',{user: req.user,events : foundEvents, admin: false, loggedIn: req.isAuthenticated()});
         else
-        res.render('events/events',{events : foundEvents,admin: req.user.administrator, loggedIn: req.isAuthenticated() });
+            res.render('events/events',{user: req.user,events : foundEvents,admin: req.user.administrator, loggedIn: req.isAuthenticated() });
         
 
     });
@@ -179,9 +179,9 @@ router.get('/:id',(req,res)=>{
 
     Event.findById(event_id,(err,foundEvent) => {
         if(req.user === undefined)
-            res.render('events/event',{event:foundEvent, admin:false ,loggedIn: req.isAuthenticated() });
+            res.render('events/event',{user: req.user,event:foundEvent, admin:false ,loggedIn: req.isAuthenticated() });
         else
-            res.render('events/event',{event:foundEvent, admin:req.user.administrator ,loggedIn: req.isAuthenticated() });
+            res.render('events/event',{user: req.user,event:foundEvent, admin:req.user.administrator ,loggedIn: req.isAuthenticated() });
     })
     
 })
@@ -209,7 +209,7 @@ router.get('/edit/:id',(req,res)=>{
             var startDate = tm(foundEvent.duration.start);
             var endDate = tm(foundEvent.duration.end);
             
-            res.render('events/eventformedit',{event:foundEvent, startDate:startDate,endDate:endDate, loggedIn: req.isAuthenticated() });
+            res.render('events/eventformedit',{user: req.user,event:foundEvent, startDate:startDate,endDate:endDate, loggedIn: req.isAuthenticated() });
         })
     }
     else

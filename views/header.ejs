@@ -68,13 +68,25 @@
                         </li>
                         
                         <% if(loggedin) {%> 
-                            <li id="profile" class="nav-item ml-3 mr-3">
-                                <a class="nav-link" href="/profile">PROFILE</a>
-                            </li>   
-
-                            <li id="logout" class="nav-item ml-3 mr-3">
-                                <a class="nav-link" href="/logout">LOGOUT</a>
-                            </li>    
+                            <% if(user.administrator) {%>
+                                <li id="register" class="nav-item ml-3 mr-3">
+                                    <a class="nav-link" href="/dashboard">DASHBOARD</a>
+                                </li>
+                            <% } %>
+                            <div class="dropdown ml-3 mr-3">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    👤 <%= user.username %>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <% if(loggedin) {%> 
+                                        <a id="createPost" class="ml-4 nav-link" href="/profile">MY PROFILE</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a id="posts" class="ml-4 nav-link" href="/profile/all">VIEW PROFILES</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a id="posts" class="ml-4 nav-link" href="/logout">LOGOUT</a>
+                                    <% } %>
+                                </div>
+                            </div>
                         <% } else { %>
                         <li id="register" class="nav-item ml-3 mr-3">
                             <a class="nav-link" href="/register">REGISTER</a>

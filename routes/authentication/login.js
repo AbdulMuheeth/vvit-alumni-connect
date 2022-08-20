@@ -5,9 +5,9 @@ const passport = require('passport');
 
 router.get('/',(req,res)=>{
     if(req.isAuthenticated())
-        res.render('authentication/message',{msg:"loggedin", loggedIn: req.isAuthenticated() });
+        res.render('authentication/message',{user: req.user,msg:"loggedin", loggedIn: req.isAuthenticated() });
     else
-        res.render("authentication/login",{errMsg:"", loggedIn: req.isAuthenticated() });
+        res.render("authentication/login",{user: req.user,errMsg:"", loggedIn: req.isAuthenticated() });
 })
 
 router.post('/',(req,res)=>{
@@ -18,13 +18,13 @@ router.post('/',(req,res)=>{
             console.log(err);
         if(!user)
         {
-            res.render("authentication/login",{errMsg:" Email or passowrd is incorrect ", loggedIn: req.isAuthenticated() });
+            res.render("authentication/login",{user: req.user,errMsg:" Email or passowrd is incorrect ", loggedIn: req.isAuthenticated() });
         }
         else
         {
             if(!user.active) 
             {
-                res.render('authentication/message',{msg:"notaccepted", loggedIn: req.isAuthenticated() });
+                res.render('authentication/message',{user: req.user,msg:"notaccepted", loggedIn: req.isAuthenticated() });
             }
             else{
             req.login(user,(err)=>{            

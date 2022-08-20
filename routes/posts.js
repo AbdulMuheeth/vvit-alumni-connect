@@ -7,7 +7,7 @@ const Comment = require('../models/comment')
 // ------------------CREATE POST ---------------
 
 router.get("/new", (req, res) => {
-    res.render('./../views/posts/newPost',{ loggedIn: req.isAuthenticated() })
+    res.render('./../views/posts/newPost',{ user: req.user,user: req.user, loggedIn: req.isAuthenticated() })
 })
 
 router.post("/new", async (req, res) => {
@@ -82,7 +82,7 @@ router.get('/edit/:id', async (req, res) => {
     if(req.isAuthenticated) {
         const post = await Post.findById(req.params.id)
         if(post.postedBy.equals(req.user.id)) {
-            res.render('posts/edit', { post: post , user: req.user, loggedIn: req.isAuthenticated() })
+            res.render('posts/edit', { user: req.user , post: post , user: req.user, loggedIn: req.isAuthenticated() })
         } else {
             res.redirect('/posts')
         }

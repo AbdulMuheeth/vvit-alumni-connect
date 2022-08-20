@@ -34,33 +34,44 @@
 </head>
 <body>
 
-<%- include('../header',{loggedin:loggedIn}) %>
+<%- include('./header',{loggedin:loggedIn}) %>
 
     <div class="jumbotron text-center">
         <div class="container">
             
-            <h1 class="display-3">Verfiy the User's</h1>
+            <h1 class="display-3">Revoke Admin Access</h1>
             
             <div class="row">
 
-                <% usersToBeVerified.forEach((userDetails)=>{ %>
+                <% Users.forEach((userDetails)=>{ %>
                     <div class="col-xl-1 col-xl-3 col-md-4 col-sm-6 mt-3">
                         <div class="card" >
                             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                             <div class="card-body">
-                                <h5 class="card-title">Username</h5><%= userDetails.username %>
+                                    <h5 class="card-title">Username</h5><%= userDetails.username %>
                                 <br><br>
                                 <% if(userDetails.regid ){ %>
-                                <h5 class="card-title">Registeration Number</h5><%= userDetails.regid %>
+                                    <h5 class="card-title">Registeration Number</h5><%= userDetails.regid %>
                                 <br><br>
                                 <% } %>
                                 <% if(userDetails.personalinfo.dob){ %>
-                                <h5 class="card-title">Date of Birth</h5><%= userDetails.personalinfo.dob.toString().substring(3,15) %>
+                                    
+                                    <h5 class="card-title">Date of Birth</h5><%= userDetails.personalinfo.dob.toString().substring(3,15) %>
                                 <br><br>
                                 <% } %>
+                                
+                                <% if(userDetails.profile.batch){ %>
+                                    <% var edyear = userDetails.profile.batch+4 %>
+                                    <h5 class="card-title">Batch</h5> <%=userDetails.profile.batch%> to <%= edyear %>
                                 <br><br>
-                                <form method="post" action="/verify">
-                                    <input type="submit" value="Accept request" name="submit">
+                                <% } %>
+                                
+                                <% if(userDetails.profile.course){ %>
+                                    <h5 class="card-title">Batch</h5> <%=userDetails.profile.course%> 
+                                <br><br>
+                                <% } %>
+                                <form method="post" action="/dashboard/revokeaccess">
+                                    <input type="submit" value="Revoke Access" name="submit">
                                     <input type="hidden" value="<%= userDetails._id %>" name="userid">
                                 </form>
                             </div>
@@ -73,7 +84,7 @@
         </div>
     </div>
 
-<!-- <%- include('../footer') %> -->
+<!-- <%- include('./footer') %> -->
 
 </body>
 </html>

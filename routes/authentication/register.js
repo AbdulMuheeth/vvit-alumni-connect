@@ -15,43 +15,51 @@ function tm (date)
 
 router.get('/',(req,res)=>{
     if(req.isAuthenticated())
-        res.render('authentication/message',{msg:"loggedin", loggedIn: req.isAuthenticated() });
+        res.render('authentication/message',{user: req.user, msg:"loggedin", loggedIn: req.isAuthenticated() });
     else
-        res.render("authentication/register",{errMsg:"", loggedIn: req.isAuthenticated() }); 
+        res.render("authentication/register",{user: req.user, errMsg:"", loggedIn: req.isAuthenticated() }); 
         
 })
 
 router.post('/',(req,res)=>{
     
+    if ( req.body.role == "null")
+    {
+        res.render("authentication/register",{user: req.user, errMsg:"Error : Please select a role", loggedIn: req.isAuthenticated() });   
+    }
+    else
+    {
 
-    const user = new User({
-        email:req.body.email,
-        username:req.body.username,
-        role:req.body.role,
-        regid:req.body.regid,
-        personalinfo:{dob:new Date(req.body.dob)}
-    })
-
+        const user = new User({
+            email:req.body.email,
+            username:req.body.username,
+            role:req.body.role,
+            regid:req.body.regid,
+            personalinfo:{dob:new Date(req.body.dob)}
+        })
     
-    User.register(user,req.body.password,(err,user)=>{     // passport method // it is used add new credentials to the db
-        if(err)
-        {
-            console.log(err);
-            res.render('authentication/register',{errMsg : err, loggedIn: req.isAuthenticated() });
-        }
-        else
-        {
-            
-            const obj = {...(user._doc)}
-            obj.password = req.body.password;
-            obj.dob = tm(new Date(req.body.dob));
-            console.log(obj)
         
-            mail.sendanemail(req.body.email,"newuser",obj);
-            res.render('authentication/login',{errMsg:"please login!", loggedIn: req.isAuthenticated() })
-
-        }
-    })
+        User.register(user,req.body.password,(err,user)=>{     // passport method // it is used add new credentials to the db
+            if(err)
+            {
+                console.log(err);
+                res.render('authentication/register',{user: req.user, errMsg : err, loggedIn: req.isAuthenticated() });
+            }
+            else
+            {
+                
+                const obj = {...(user._doc)}
+                obj.password = req.body.password;
+                obj.dob = tm(new Date(req.body.dob));
+                console.log(obj)
+            
+                mail.sendanemail(req.body.email,"newuser",obj);
+                res.render('authentication/login',{user: req.user, errMsg:"please login!", loggedIn: req.isAuthenticated() })
+    
+            }
+        
+        })
+    }
 
 })
 

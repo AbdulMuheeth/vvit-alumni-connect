@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 
 router.get("/new", (req, res) => {
     if(req.isAuthenticated())
-        res.render('./../views/blog/newBlogPost', {loggedIn: req.isAuthenticated()})
+        res.render('./../views/blog/newBlogPost', {user: req.user, loggedIn: req.isAuthenticated()})
     else
         res.redirect('/login')
 })

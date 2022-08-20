@@ -8,13 +8,61 @@ let fs = require('fs');
 
 const mail = require("../functionalities/mailTransporter");
 
-router.get("/",(req,res)=>{
+router.get("/",async (req,res)=>{
     if(req.isAuthenticated() && req.user.administrator)
-        res.render('./../views/dashboard',{admin:true,loggedIn:req.isAuthenticated()});
+    {
+        let verify = await User.countDocuments({active:false})
+        let enrolled = await User.countDocuments({active:true})
+
+        res.render('./../views/dashboard',{user: req.user,admin:true,loggedIn:req.isAuthenticated(),tobeverified:verify ,totalenrolled:enrolled});
+    }
     else
         res.status(404).render('404');
 })
 
+router.get("/allow-admin-access",(req,res)=>{
+    if(req.isAuthenticated() && req.user.administrator)
+    {
+        User.find({active:true,administrator:false},(err,foundUsers)=>{
+            res.render('AdminAccess.ejs',{user: req.user,admin:true,Users:foundUsers,loggedIn:req.isAuthenticated()});
+        })
+    }
+    else
+        res.status(404).render('404');
+})
+
+router.post("/giveaccess",(req,res)=>{
+
+    if(req.isAuthenticated() && req.user.administrator)
+    {
+        User.findByIdAndUpdate(req.body.userid,{user: req.user,administrator:true,accessgivenby:req.user.username},(err,doc)=>{
+            // console.log(doc);
+            res.redirect('/dashboard/allow-admin-access');
+        })
+    }
+})
+
+router.get("/revoke-admin-access",(req,res)=>{
+    if(req.isAuthenticated() && req.user.administrator)
+    {
+        User.find({active:true,administrator:true},(err,foundUsers)=>{
+            res.render('revokeAccess.ejs',{user: req.user,admin:true,Users:foundUsers,loggedIn:req.isAuthenticated()});
+        })
+    }
+    else
+        res.status(404).render('404');
+})
+
+router.post("/revokeaccess",(req,res)=>{
+
+    if(req.isAuthenticated() && req.user.administrator)
+    {
+        User.findByIdAndUpdate(req.body.userid,{user: req.user,administrator:false,accessrevokedby:req.user.username},(err,doc)=>{
+            // console.log(doc);
+            res.redirect('/dashboard/revoke-admin-access');
+        })
+    }
+})
 
 
 router.get("/downloadprofiles", (req,res)=>{

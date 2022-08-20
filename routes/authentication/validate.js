@@ -29,7 +29,7 @@ function timeDifference(date1,date2)
 
 
 router.get('/forgot',(req,res)=>{
-    res.render('authentication/forgotPassword',{errMsg:"",loggedIn:req.isAuthenticated()})
+    res.render('authentication/forgotPassword',{user: req.user,errMsg:"",loggedIn:req.isAuthenticated()})
 })
 
 router.post('/forgot',async (req,res)=>{
@@ -63,7 +63,7 @@ router.post('/forgot',async (req,res)=>{
                     mail.sendanemail(given_email,"forgotpassword",obj);
                     // let resp = email()
                     // console.log(res)
-                    res.render("authentication/message",{msg:"mailsent",loggedIn:req.isAuthenticated()})
+                    res.render("authentication/message",{user: req.user,msg:"mailsent",loggedIn:req.isAuthenticated()})
                     // res.status(200).send({ message: "Mail send" });
             
                     // res.render("authentication/message",{msg:"mailnotsent",loggedIn:req.isAuthenticated()})
@@ -72,7 +72,7 @@ router.post('/forgot',async (req,res)=>{
             else
             {
                 // user not found
-                res.render('authentication/forgotPassword',{errMsg:"No User found with given email",loggedIn:req.isAuthenticated()})
+                res.render('authentication/forgotPassword',{user: req.user,errMsg:"No User found with given email",loggedIn:req.isAuthenticated()})
             }
 
 
@@ -98,7 +98,7 @@ router.post('/changepassword',(req,res)=>{
     }
     else
     {
-        res.render("authentication/newpassword",{errMsg:"something went wrong with cookies",loggedIn:req.isAuthenticated()})
+        res.render("authentication/newpassword",{user: req.user,errMsg:"something went wrong with cookies",loggedIn:req.isAuthenticated()})
         // res.status(404,{message:"something went wrong with cookies"})
     }
     
@@ -132,25 +132,25 @@ router.get('/:timestamp/:id/:hash',(req,res)=>{
                             hs:req.params.hash
                         }
                         res.cookie("pass_prop",reset_obj)   // creating cookie
-                        res.render("authentication/newpassword",{errMsg:"",loggedIn:req.isAuthenticated()})
+                        res.render("authentication/newpassword",{user: req.user,errMsg:"",loggedIn:req.isAuthenticated()})
                     }
                 }
                 else
                 {
-                    res.render("authentication/message",{msg:"tkused",loggedIn:req.isAuthenticated()})
+                    res.render("authentication/message",{user: req.user,msg:"tkused",loggedIn:req.isAuthenticated()})
                     // res.status(500).send({message:"user has not requested for the pass change"})
                 }
             }
             else
             {
-                res.render("authentication/message",{msg:"nouser",loggedIn:req.isAuthenticated()})
+                res.render("authentication/message",{user: req.user,msg:"nouser",loggedIn:req.isAuthenticated()})
                 // res.status(500).send({message:"user not found"})
             }
         })
     }
     else
     {
-        res.render("authentication/message",{msg:"tkexpired",loggedIn:req.isAuthenticated()})
+        res.render("authentication/message",{user: req.user,msg:"tkexpired",loggedIn:req.isAuthenticated()})
         // res.status(500).send({message:"link experied"})
     }
 })
@@ -190,7 +190,7 @@ router.get('/:timestamp/:id/:hash/:pass',(req,res)=>{
                                 
                                 console.log("reset success")
                                 res.clearCookie("pass_prop");
-                                res.render("authentication/message",{msg:"tkused",loggedIn:req.isAuthenticated()})
+                                res.render("authentication/message",{user: req.user,msg:"tkused",loggedIn:req.isAuthenticated()})
                                 // res.status(200).send({message:"reset successful"})
                             }
                             else
@@ -204,20 +204,20 @@ router.get('/:timestamp/:id/:hash/:pass',(req,res)=>{
                 }
                 else
                 {
-                    res.render("authentication/message",{msg:"tkused",loggedIn:req.isAuthenticated()})
+                    res.render("authentication/message",{user: req.user,msg:"tkused",loggedIn:req.isAuthenticated()})
                     // res.status(500).send({message:"user has not requested for the pass change"})
                 }
             }
             else
             {
-                res.render("authentication/message",{msg:"nouser",loggedIn:req.isAuthenticated()})
+                res.render("authentication/message",{user: req.user,msg:"nouser",loggedIn:req.isAuthenticated()})
                 // res.status(500).send({message:"user not found"})
             }
         })
     }
     else
     {
-        res.render("authentication/message",{msg:"tkexpired",loggedIn:req.isAuthenticated()})
+        res.render("authentication/message",{user: req.user,msg:"tkexpired",loggedIn:req.isAuthenticated()})
         // res.status(500).send({message:"link experied"})
     }
 })

@@ -83,16 +83,17 @@
           </p>
         </div>
       </div>
+      
       <div class="row mt-5" style="margin-left: 5%">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="m-3">
-            <b>Users to be verified:</b>
+            <b>Users to be verified : <%= tobeverified %> </b>
           </div>
           <div class="m-3">
-            <b>Total Enrolled User:</b>
+            <b>Total Enrolled User: <%= totalenrolled %> </b>
           </div>
         </div>
-        <div class="col-md-6 m-6" style="margin-top: 2.5%;">
+        <div class="col-md-3 m-6" style="margin-top: 2.5%;">
           <p class="lead" style="margin-left: 5%">
             <a
               class="btn btn-danger btn-lg"
@@ -101,6 +102,30 @@
               role="button"
             >
               👤 Download the User's Details</a
+            >
+          </p>
+        </div>
+        <div class="col-md-3 m-6" style="margin-top: 2.5%;">
+          <p class="lead" style="margin-left: 5%">
+            <a
+              class="btn btn-danger btn-lg"
+              style="margin-left: 5%"
+              href="/dashboard/allow-admin-access"
+              role="button"
+            >
+              👤 Give Admin Access </a
+            >
+          </p>
+        </div>
+        <div class="col-md-3 m-6" style="margin-top: 2.5%;">
+          <p class="lead" style="margin-left: 5%">
+            <a
+              class="btn btn-danger btn-lg"
+              style="margin-left: 5%"
+              href="/dashboard/revoke-admin-access"
+              role="button"
+            >
+              👤 Revoke Admin Access </a
             >
           </p>
         </div>

@@ -33,6 +33,7 @@ const profileEditRouter = require('./routes/authentication/profileEdit')
 const eventRouter = require('./routes/events')
 const galleryRouter = require('./routes/gallery')
 const dashBoardRouter = require('./routes/dashboard')
+// const newFieldRouter = require('./routes/operation')
 
 const app = express()
 
@@ -81,6 +82,7 @@ app.use('/editprofile',profileEditRouter);
 app.use('/events',eventRouter)
 app.use('/gallery',galleryRouter)
 app.use('/dashboard',dashBoardRouter)
+// app.use('/addField',newFieldRouter)
 
 app.get("/", (req, res) => {
     res.redirect("/home")
@@ -145,14 +147,15 @@ app.get("/home", async (req, res) => {
     let past_months = await month(past_events);           let past_dates = await date(past_events);
 
     res.render('home', {
-         posts: posts, 
-         blogPosts: blogPosts,
-         past_events: past_events,
-         ongoing_events: ongoing_events,
-         upcoming_events: upcoming_events,
-         months:{upcoming_months:upcoming_months,ongoing_months:ongoing_months,past_months:past_months},
-         dates:{upcoming_dates:upcoming_dates,ongoing_dates:ongoing_dates,past_dates:past_dates},
-         loggedIn: req.isAuthenticated()
+        user: req.user,
+        posts: posts, 
+        blogPosts: blogPosts,
+        past_events: past_events,
+        ongoing_events: ongoing_events,
+        upcoming_events: upcoming_events,
+        months:{upcoming_months:upcoming_months,ongoing_months:ongoing_months,past_months:past_months},
+        dates:{upcoming_dates:upcoming_dates,ongoing_dates:ongoing_dates,past_dates:past_dates},
+        loggedIn: req.isAuthenticated()
     })
 
     
@@ -187,5 +190,5 @@ app.get('*',async(req,res)=>{
 
 })
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -42,7 +42,7 @@ router.get('/',(req,res)=>{
     else
     {
         
-        res.render('authentication/login',{errMsg:"Please Login to View your Profile", loggedIn: req.isAuthenticated() });
+        res.render('authentication/login',{user: req.user, errMsg:"Please Login to View your Profile", loggedIn: req.isAuthenticated() });
     }
 })
 
@@ -115,7 +115,7 @@ router.get('/all',(req,res)=>{
             User.find(filter_doc,(err,foundUsers)=>{
                 if(!err)
                 {
-                    res.render("authentication/profiles",{users:foundUsers,filterapplied:true,loggedIn: req.isAuthenticated(),others:false})
+                    res.render("authentication/profiles",{user: req.user, users:foundUsers,filterapplied:true,loggedIn: req.isAuthenticated(),others:false})
                 }
                 else
                     console.log("render "+err)
@@ -124,14 +124,14 @@ router.get('/all',(req,res)=>{
         else
         {
             User.find({},(err,foundUsers)=>{
-                res.render("authentication/profiles",{users:foundUsers,filterapplied:false, loggedIn: req.isAuthenticated(),others:false})
+                res.render("authentication/profiles",{user: req.user, users:foundUsers,filterapplied:false, loggedIn: req.isAuthenticated(),others:false})
             })
         }      
     }
         
     else
     {
-        res.render('authentication/login',{errMsg:"Please Login to all Profile", loggedIn: req.isAuthenticated() });
+        res.render('authentication/login',{user: req.user, errMsg:"Please Login to all Profile", loggedIn: req.isAuthenticated() });
     }
 
 })
@@ -170,7 +170,7 @@ router.post('/all',(req,res)=>{
     }
         
     else
-        res.render('authentication/login',{errMsg:"Please Login to all Profile", loggedIn: req.isAuthenticated() });
+        res.render('authentication/login',{user: req.user, errMsg:"Please Login to all Profile", loggedIn: req.isAuthenticated() });
         
 })
 router.get('/clearfilter',(req,res)=>{
@@ -190,7 +190,7 @@ router.get("/:pname",(req,res)=>{
         User.findOne({username:pname},(err,foundUser)=>{
             if(!err && foundUser!=null)
             {   
-                res.render("authentication/profile",{user:foundUser, loggedIn: req.isAuthenticated(),others:true});
+                res.render("authentication/profile",{ user:foundUser, loggedIn: req.isAuthenticated(),others:true});
             }
             else
                 res.render("404");
@@ -199,7 +199,7 @@ router.get("/:pname",(req,res)=>{
     }
     else
     {
-        res.render('authentication/login',{errMsg:"Please Login to View Profile", loggedIn: req.isAuthenticated() });
+        res.render('authentication/login',{user: req.user, errMsg:"Please Login to View Profile", loggedIn: req.isAuthenticated() });
     }
         
 })

@@ -16,7 +16,7 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated())
         res.render('authentication/profileEdit',{user:req.user, dob:tm(req.user.personalinfo.dob) ,loggedIn: req.isAuthenticated() });
     else
-        res.render('authentication/login',{errMsg:"Please login to continue", loggedIn: req.isAuthenticated() })
+        res.render('authentication/login',{user: req.user, errMsg:"Please login to continue", loggedIn: req.isAuthenticated() })
 })
 
 router.post('/', async (req,res)=>{

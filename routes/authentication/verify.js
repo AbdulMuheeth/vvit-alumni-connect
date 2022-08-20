@@ -7,7 +7,7 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated() && req.user.active && (req.user.administrator || req.user.moderator))
     {
         User.find({"active" : {$ne:true}},(err,foundUser)=>{
-            res.render('authentication/verify',{usersToBeVerified : foundUser, loggedIn: req.isAuthenticated()});
+            res.render('authentication/verify',{user: req.user,usersToBeVerified : foundUser, loggedIn: req.isAuthenticated()});
         })
     }
     else
